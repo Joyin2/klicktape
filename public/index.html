@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Klicktape - Privacy-First Social Media</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              gold: '#FFD700',
+              black: '#000000',
+              crystal: '#1A1A33',
+              prism: '#FF9500',
+              lightgold: '#FFF8E1',
+            },
+            boxShadow: {
+              prism: '0 0 30px rgba(255, 149, 0, 0.8), 0 0 60px rgba(255, 149, 0, 0.4)',
+              gold: '0 0 25px rgba(255, 215, 0, 0.9)',
+            },
+            fontFamily: {
+              exo: ['Exo 2', 'sans-serif'],
+              space: ['Space Mono', 'monospace'],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        margin: 0;
+        background: #000000;
+        color: #FFF8E1;
+        font-family: 'Space Mono', monospace;
+        overflow-x: hidden;
+        cursor: none;
+      }
+      #lattice {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        opacity: 0.5; /* Reduced for mobile performance */
+      }
+      .prism-card {
+        background: linear-gradient(135deg, rgba(26, 26, 51, 0.9), rgba(0, 0, 0, 0.7));
+        border: 1px solid #FFD700;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .prism-card:hover {
+        transform: scale(1.02); /* Simplified for mobile */
+        box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+      }
+      .cursor {
+        display: none; /* Hidden on mobile by default */
+      }
+      @media (min-width: 768px) {
+        .cursor {
+          display: block;
+          position: fixed;
+          width: 25px;
+          height: 25px;
+          border: 2px solid #FFD700;
+          border-radius: 50%;
+          pointer-events: none;
+          z-index: 9999;
+          transition: transform 0.2s ease, border-color 0.3s ease;
+        }
+        .cursor.hover {
+          transform: scale(1.5);
+          border-color: #FF9500;
+        }
+      }
+      .liquid-gold {
+        animation: liquid 4s infinite;
+      }
+      @keyframes liquid {
+        0%, 100% { transform: translateY(0); }
+        25% { transform: translateY(-3px); }
+        75% { transform: translateY(3px); }
+      }
+      .pulse-prism {
+        animation: pulse-prism 3s infinite;
+      }
+      @keyframes pulse-prism {
+        0%, 100% { opacity: 0.9; transform: scale(1); }
+        50% { opacity: 1; transform: scale(1.02); }
+      }
+      .reveal {
+        opacity: 0;
+        transform: translateY(50px);
+        transition: all 0.8s ease-out;
+      }
+      .reveal.active {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      #genesis {
+        position: fixed;
+        inset: 0;
+        background: #000000;
+        z-index: 10000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center; /* Ensures text is centered horizontally */
+        padding: 1rem; /* Adds some breathing room on small screens */
+        animation: fadeOut 4s forwards 2s;
+      }
+      @keyframes fadeOut {
+        to { opacity: 0; pointer-events: none; }
+      }
+      p, h3 {
+        line-height: 1.6;
+        letter-spacing: 0.5px;
+      }
+      section {
+        padding: 4rem 1rem; /* Reduced padding for mobile */
+      }
+      @media (min-width: 768px) {
+        section {
+          padding: 6rem 0;
+        }
+      }
+      /* Mobile Navbar */
+      .mobile-menu {
+        display: none; /* Hidden by default */
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.95);
+        z-index: 100;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        transform: translateX(100%); /* Start off-screen to the right */
+        transition: transform 0.3s ease-in-out; /* Smooth transition */
+      }
+      .mobile-menu.active {
+        display: flex; /* Show when active */
+        transform: translateX(0); /* Slide in */
+      }
+      .hamburger {
+        display: block;
+        font-size: 2rem;
+        color: #FFD700;
+        cursor: pointer;
+        z-index: 101; /* Ensure it’s above other elements */
+      }
+      @media (min-width: 768px) {
+        .hamburger {
+          display: none;
+        }
+        .mobile-menu {
+          display: none !important; /* Force hide on desktop */
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 3D Prism Lattice Background -->
+    <div id="lattice"></div>
+
+    <!-- Genesis Animation -->
+    <div id="genesis">
+      <h1 class="text-4xl sm:text-6xl md:text-8xl font-exo text-gold liquid-gold">Privacy-First Social Media</h1>
+    </div>
+
+    <!-- Custom Cursor -->
+    <div class="cursor"></div>
+
+    <!-- Navbar -->
+    <nav class="fixed top-0 w-full bg-black/90 backdrop-blur-2xl z-50 shadow-gold">
+      <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+        <a href="#" class="text-2xl sm:text-3xl font-exo text-gold liquid-gold">Klicktape</a>
+        <div class="hidden md:flex space-x-8 text-sm font-space uppercase tracking-widest">
+          <a href="#features" class="hover:text-prism transition-colors">Features</a>
+          <a href="#about" class="hover:text-prism transition-colors">About</a>
+          <a href="#how-it-works" class="hover:text-prism transition-colors">How It Works</a>
+          <a href="#testimonials" class="hover:text-prism transition-colors">Testimonials</a>
+          <a href="#faq" class="hover:text-prism transition-colors">FAQ</a>
+        </div>
+        <a href="form/form.html" class="hidden md:block bg-gradient-to-r from-gold to-prism text-black px-4 py-2 rounded-full font-space hover:shadow-prism transition-all">Join Waitlist</a>
+        <div class="hamburger md:hidden">☰</div>
+      </div>
+      <!-- Mobile Menu -->
+      <div class="mobile-menu">
+        <div class="absolute top-4 right-4 text-3xl text-gold cursor-pointer close-menu">×</div>
+        <a href="#features" class="text-2xl font-space text-lightgold py-4 hover:text-prism">Features</a>
+        <a href="#about" class="text-2xl font-space text-lightgold py-4 hover:text-prism">About</a>
+        <a href="#how-it-works" class="text-2xl font-space text-lightgold py-4 hover:text-prism">How It Works</a>
+        <a href="#testimonials" class="text-2xl font-space text-lightgold py-4 hover:text-prism">Testimonials</a>
+        <a href="#faq" class="text-2xl font-space text-lightgold py-4 hover:text-prism">FAQ</a>
+        <a href="form/form.html" class="bg-gradient-to-r from-gold to-prism text-black px-6 py-3 rounded-full font-space text-lg mt-6 hover:shadow-prism transition-all">Join Waitlist</a>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center overflow-hidden">
+      <div class="max-w-7xl mx-auto px-4 text-center z-10">
+        <h1 class="text-3xl sm:text-5xl md:text-7xl font-exo font-bold mb-6 text-gold liquid-gold">Social Media, Reimagined.</h1>
+        <p class="text-lg sm:text-xl md:text-2xl text-lightgold font-space mb-8 max-w-3xl mx-auto italic">"A privacy-first platform where you can connect freely, without ads or data exploitation."</p>
+        <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
+          <a href="form/form.html" class="bg-gradient-to-r from-gold to-prism text-black px-8 py-3 rounded-full font-space text-lg hover:shadow-gold transition-all">Get Started</a>
+          <a href="#features" class="border-2 border-gold text-gold px-8 py-3 rounded-full font-space text-lg hover:bg-gold/10 transition-all">Learn More</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="relative">
+      <div class="max-w-7xl mx-auto px-4">
+        <h2 class="text-3xl sm:text-4xl md:text-6xl font-exo text-center mb-12 text-gold pulse-prism">Why Choose Klicktape?</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+          <div class="reveal prism-card p-8 rounded-2xl">
+            <h3 class="text-xl sm:text-2xl font-exo mb-4 text-gold liquid-gold">Ad-Free Experience</h3>
+            <p class="text-lightgold font-space">Enjoy social media without ads or data tracking. Your privacy is our priority.</p>
+          </div>
+          <div class="reveal prism-card p-8 rounded-2xl">
+            <h3 class="text-xl sm:text-2xl font-exo mb-4 text-gold liquid-gold">Anonymous Rooms</h3>
+            <p class="text-lightgold font-space">Connect with others anonymously and share freely without fear of judgment.</p>
+          </div>
+          <div class="reveal prism-card p-8 rounded-2xl">
+            <h3 class="text-xl sm:text-2xl font-exo mb-4 text-gold liquid-gold">Gamified Engagement</h3>
+            <p class="text-lightgold font-space">Create reels, earn rewards, and climb the leaderboard in a fun, engaging way.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="bg-gradient-to-b from-black to-crystal">
+      <div class="max-w-7xl mx-auto px-4">
+        <h2 class="text-3xl sm:text-4xl md:text-6xl font-exo text-center mb-12 text-gold">How It Works</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+          <div class="reveal prism-card p-8 rounded-2xl text-center">
+            <div class="text-4xl font-bold text-prism mb-4 pulse-prism">1</div>
+            <h3 class="text-xl sm:text-2xl font-exo mb-4 text-gold">Sign Up</h3>
+            <p class="text-lightgold font-space">Create your account in seconds. No personal data required—just an email and password.</p>
+          </div>
+          <div class="reveal prism-card p-8 rounded-2xl text-center">
+            <div class="text-4xl font-bold text-prism mb-4 pulse-prism">2</div>
+            <h3 class="text-xl sm:text-2xl font-exo mb-4 text-gold">Customize Your Profile</h3>
+            <p class="text-lightgold font-space">Set up your profile with a photo and bio. You control what you share—no tracking, no ads.</p>
+          </div>
+          <div class="reveal prism-card p-8 rounded-2xl text-center">
+            <div class="text-4xl font-bold text-prism mb-4 pulse-prism">3</div>
+            <h3 class="text-xl sm:text-2xl font-exo mb-4 text-gold">Connect Freely</h3>
+            <p class="text-lightgold font-space">Join anonymous rooms, share reels, and engage with others without worrying about privacy.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="relative">
+      <div class="max-w-7xl mx-auto px-4">
+        <h2 class="text-3xl sm:text-4xl md:text-6xl font-exo text-center mb-12 text-gold pulse-prism">About Klicktape</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+          <div class="reveal prism-card p-8 rounded-2xl">
+            <p class="text-lightgold font-space mb-4">Klicktape is a privacy-first social media platform designed to give you control over your data. We believe in creating a safe, ad-free space where you can connect authentically.</p>
+            <p class="text-lightgold font-space mb-6">Our mission is to redefine social media with trust and transparency. Join us in building a better digital future.</p>
+            <a href="form/form.html" class="bg-gradient-to-r from-gold to-prism text-black px-6 py-3 rounded-full font-space hover:shadow-gold transition-all">Join the Movement</a>
+          </div>
+          <div class="reveal">
+            <div class="w-full h-64 sm:h-80 md:h-[400px] rounded-2xl overflow-hidden shadow-gold">
+              <video autoplay muted loop class="w-full h-full object-cover opacity-70">
+                <source src="/Subtitle.mp4" type="video/mp4" />
+              </video>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="bg-gradient-to-b from-black to-crystal">
+      <div class="max-w-7xl mx-auto px-4">
+        <h2 class="text-3xl sm:text-4xl md:text-6xl font-exo text-center mb-12 text-gold liquid-gold">What People Are Saying</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+          <div class="reveal prism-card p-8 rounded-2xl">
+            <p class="text-lightgold font-space mb-4">"Klicktape will be a breath of fresh air in the social media landscape—soon, a platform that finally respects my privacy!"</p>
+            <p class="font-bold text-gold">- Maya, Social Media User</p>
+          </div>
+          <div class="reveal prism-card p-8 rounded-2xl">
+            <p class="text-lightgold font-space mb-4">"I can’t wait to love the ad-free experience—it’ll be so refreshing to use a platform that won’t track my every move!"</p>
+            <p class="font-bold text-gold">- Raj, Tech Enthusiast</p>
+          </div>
+          <div class="reveal prism-card p-8 rounded-2xl">
+            <p class="text-lightgold font-space mb-4">"The anonymous rooms feature is amazing. It’s great to connect with people without worrying about privacy."</p>
+            <p class="font-bold text-gold">- Priya, Content Creator</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="relative">
+      <div class="max-w-7xl mx-auto px-4">
+        <h2 class="text-3xl sm:text-4xl md:text-6xl font-exo text-center mb-12 text-gold pulse-prism">Frequently Asked Questions</h2>
+        <div class="space-y-12">
+          <div class="reveal prism-card p-8 rounded-2xl">
+            <h3 class="text-lg sm:text-xl font-exo mb-4 text-gold">What makes Klicktape different?</h3>
+            <p class="text-lightgold font-space">Klicktape prioritizes privacy and transparency—no tracking, no ads, just authentic connections.</p>
+          </div>
+          <div class="reveal prism-card p-8 rounded-2xl">
+            <h3 class="text-lg sm:text-xl font-exo mb-4 text-gold">Is Klicktape free to use?</h3>
+            <p class="text-lightgold font-space">Yes, enjoy basic features for free, with an optional premium ad-free upgrade.</p>
+          </div>
+          <div class="reveal prism-card p-8 rounded-2xl">
+            <h3 class="text-lg sm:text-xl font-exo mb-4 text-gold">How does Klicktape ensure privacy?</h3>
+            <p class="text-lightgold font-space">End-to-end encryption and strict data policies keep your information secure.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black py-8">
+      <div class="max-w-7xl mx-auto px-4 text-center">
+        <p class="text-lightgold/60 font-space">© 2025 Klicktape. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+      // 3D Prism Lattice
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+      const renderer = new THREE.WebGLRenderer({ alpha: true });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      document.getElementById('lattice').appendChild(renderer.domElement);
+
+      const geometry = new THREE.IcosahedronGeometry(10, 1); // Smaller for mobile
+      const material = new THREE.MeshBasicMaterial({ color: 0xFFD700, wireframe: true, transparent: true, opacity: 0.3 });
+      const lattice = new THREE.Mesh(geometry, material);
+      scene.add(lattice);
+
+      camera.position.z = 20;
+
+      let mouseX = 0, mouseY = 0;
+      document.addEventListener('mousemove', (e) => {
+        mouseX = (e.clientX / window.innerWidth - 0.5) * 0.03;
+        mouseY = (e.clientY / window.innerHeight - 0.5) * 0.03;
+      });
+
+      function animate() {
+        requestAnimationFrame(animate);
+        lattice.rotation.x += 0.001 + mouseY;
+        lattice.rotation.y += 0.001 + mouseX;
+        renderer.render(scene, camera);
+      }
+      animate();
+
+      window.addEventListener('resize', () => {
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+      });
+
+      // Custom Cursor
+      const cursor = document.querySelector('.cursor');
+      document.addEventListener('mousemove', (e) => {
+        cursor.style.left = `${e.clientX}px`;
+        cursor.style.top = `${e.clientY}px`;
+      });
+      document.querySelectorAll('a, button, .prism-card').forEach(el => {
+        el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+        el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+      });
+
+      // Scroll Reveal
+      const reveals = document.querySelectorAll('.reveal');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) entry.target.classList.add('active');
+        });
+      }, { threshold: 0.2 });
+      reveals.forEach(reveal => observer.observe(reveal));
+
+      // Mobile Menu Toggle
+      document.addEventListener('DOMContentLoaded', () => {
+        const hamburger = document.querySelector('.hamburger');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const closeMenu = document.querySelector('.close-menu');
+
+        // Open menu
+        hamburger.addEventListener('click', () => {
+          mobileMenu.classList.add('active');
+        });
+
+        // Close menu
+        closeMenu.addEventListener('click', () => {
+          mobileMenu.classList.remove('active');
+        });
+
+        // Close menu when clicking a link (optional enhancement)
+        mobileMenu.querySelectorAll('a').forEach(link => {
+          link.addEventListener('click', () => {
+            mobileMenu.classList.remove('active');
+          });
+        });
+      });
+    </script>
+
+    <!-- Firebase -->
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
+      const firebaseConfig = {
+        apiKey: "AIzaSyBArk7fEX0Jgi26Phtp1t96XY-FxEtkN7M",
+        authDomain: "klicktape-d087a.firebaseapp.com",
+        projectId: "klicktape-d087a",
+        storageBucket: "klicktape-d087a.firebasestorage.app",
+        messagingSenderId: "537131358526",
+        appId: "1:537131358526:web:22ba55670809a5b107746f"
+      };
+      const app = initializeApp(firebaseConfig);
+    </script>
+  </body>
+</html>

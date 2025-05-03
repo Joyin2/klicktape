@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Klicktape - Privacy-First Social Media</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: "#4F46E5",
+              secondary: "#7C3AED",
+              accent: "#F472B6",
+              dark: "#1E1E2E",
+            },
+            boxShadow: {
+              glass: "0 4px 30px rgba(0, 0, 0, 0.1)",
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body class="bg-gradient-to-b from-gray-50 to-gray-100 text-gray-900">
+    <!-- Navbar -->
+    <nav class="bg-white/80 backdrop-blur-md shadow-lg sticky top-0 z-50">
+      <div class="max-w-6xl mx-auto px-4">
+        <div class="flex justify-between items-center py-4">
+          <div class="flex items-center">
+            <a href="#" class="text-2xl font-bold text-primary">Klicktape</a>
+          </div>
+          <div class="hidden md:flex space-x-8">
+            <a href="#features" class="hover:text-primary transition-colors"
+              >Features</a
+            >
+            <a href="#about" class="hover:text-primary transition-colors"
+              >About</a
+            >
+            <a href="#how-it-works" class="hover:text-primary transition-colors"
+              >How It Works</a
+            >
+            <a href="#testimonials" class="hover:text-primary transition-colors"
+              >Testimonials</a
+            >
+            <a href="#faq" class="hover:text-primary transition-colors">FAQ</a>
+          </div>
+          <a
+            href="form/form.html"
+            class="bg-primary text-white px-6 py-2 rounded-full hover:bg-secondary transition-colors"
+            >Join Waitlist</a
+          >
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section
+      class="relative bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 py-32"
+    >
+      <div
+        class="absolute inset-0 bg-gradient-to-r from-primary/10 to-secondary/10"
+      ></div>
+      <div class="max-w-6xl mx-auto px-4 text-center relative z-10">
+        <h1 class="text-5xl font-bold text-gray-900 mb-6">
+          Social Media, Reimagined.
+        </h1>
+        <p class="text-xl text-gray-600 mb-8 italic">
+          "A privacy-first platform where you can connect freely, without ads or
+          data exploitation."
+        </p>
+        <div class="flex justify-center space-x-4">
+          <a
+            href="#"
+            class="bg-primary text-white px-8 py-3 rounded-full hover:bg-secondary transition-colors"
+            >Get Started</a
+          >
+          <a
+            href="#features"
+            class="bg-white text-primary px-8 py-3 rounded-full border border-primary hover:bg-primary/10 transition-colors"
+            >Learn More</a
+          >
+        </div>
+        <!-- Video Placeholder -->
+        <div
+          class="mt-16 bg-white/20 backdrop-blur rounded-lg overflow-hidden shadow-glass mx-auto w-full max-w-4xl h-96 border border-white/20"
+        >
+          <div class="flex items-center justify-center h-full">
+            <video autoplay muted loop id="myVideo" class="bg-video">
+              <source src="Subtitle (1).mp4" type="video/mp4" />
+              Your browser does not support HTML5 video.
+            </video>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section
+      id="features"
+      class="bg-gradient-to-br from-gray-50 to-indigo-50 py-20"
+    >
+      <div class="max-w-6xl mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center mb-12">
+          Why Choose Klicktape?
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div
+            class="bg-white/80 backdrop-blur p-8 rounded-lg shadow-glass hover:shadow-xl transition-all duration-300 border border-white/20 relative overflow-hidden"
+          >
+            <div class="absolute inset-0">
+              <img
+                src="https://images.pexels.com/photos/268533/pexels-photo-268533.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+                alt=""
+                class="w-full h-full object-cover opacity-20"
+              />
+            </div>
+            <div class="relative z-10">
+              <h3 class="text-xl font-bold mb-4 text-primary">
+                Ad-Free Experience
+              </h3>
+              <p class="text-gray-600">
+                Enjoy social media without ads or data tracking. Your privacy is
+                our priority.
+              </p>
+            </div>
+          </div>
+          <div
+          class="bg-white/80 backdrop-blur p-8 rounded-lg shadow-glass hover:shadow-xl transition-all duration-300 border border-white/20 relative overflow-hidden"
+          >
+            <div class="absolute inset-0">
+              <img
+                src="https://images.pexels.com/photos/268533/pexels-photo-268533.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+                alt=""
+                class="w-full h-full object-cover opacity-20"
+              />
+            </div>
+            <h3 class="text-xl font-bold mb-4 text-primary">Anonymous Rooms</h3>
+            <p class="text-gray-600">
+              Connect with others anonymously and share freely without fear of
+              judgment.
+            </p>
+          </div>
+          <div
+          class="bg-white/80 backdrop-blur p-8 rounded-lg shadow-glass hover:shadow-xl transition-all duration-300 border border-white/20 relative overflow-hidden"
+          >
+            <div class="absolute inset-0">
+              <img
+                src="https://images.pexels.com/photos/268533/pexels-photo-268533.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+                alt=""
+                class="w-full h-full object-cover opacity-20"
+              />
+            </div>
+            <h3 class="text-xl font-bold mb-4 text-primary">
+              Gamified Engagement
+            </h3>
+            <p class="text-gray-600">
+              Create reels, earn rewards, and climb the leaderboard in a fun,
+              engaging way.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section
+      id="how-it-works"
+      class="bg-gradient-to-br from-white to-purple-50 py-20"
+    >
+      <div class="max-w-6xl mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center mb-12">How It Works</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <!-- Step 1 -->
+          <div
+            class="bg-white/80 backdrop-blur p-8 rounded-lg shadow-glass hover:shadow-xl transition-all duration-300 border border-white/20 text-center relative overflow-hidden"
+          >
+          <div class="absolute inset-0">
+            <img
+              src="https://images.pexels.com/photos/1629236/pexels-photo-1629236.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+              alt=""
+              class="w-full h-full object-cover opacity-20"
+            />
+          </div>
+            <div class="text-4xl font-bold text-primary mb-4">1</div>
+            <h3 class="text-xl font-bold mb-4">Sign Up</h3>
+            <p class="text-gray-600">
+              Create your account in seconds. No personal data required—just an
+              email and password.
+            </p>
+          </div>
+          <!-- Step 2 -->
+          <div
+            class="bg-white/80 backdrop-blur p-8 rounded-lg shadow-glass hover:shadow-xl transition-all duration-300 border border-white/20 text-center relative overflow-hidden"
+          >
+          <div class="absolute inset-0">
+            <img
+              src="https://images.pexels.com/photos/1629236/pexels-photo-1629236.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+              alt=""
+              class="w-full h-full object-cover opacity-20"
+            />
+          </div>
+            <div class="text-4xl font-bold text-primary mb-4">2</div>
+            <h3 class="text-xl font-bold mb-4">Customize Your Profile</h3>
+            <p class="text-gray-600">
+              Set up your profile with a photo and bio. You control what you
+              share—no tracking, no ads.
+            </p>
+          </div>
+          <!-- Step 3 -->
+          <div
+            class="bg-white/80 backdrop-blur p-8 rounded-lg shadow-glass hover:shadow-xl transition-all duration-300 border border-white/20 text-center relative overflow-hidden"
+          >
+          <div class="absolute inset-0">
+            <img
+              src="https://images.pexels.com/photos/1629236/pexels-photo-1629236.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+              alt=""
+              class="w-full h-full object-cover opacity-20"
+            />
+          </div>
+            <div class="text-4xl font-bold text-primary mb-4">3</div>
+            <h3 class="text-xl font-bold mb-4">Connect Freely</h3>
+            <p class="text-gray-600">
+              Join anonymous rooms, share reels, and engage with others without
+              worrying about privacy.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="bg-gradient-to-br from-white to-indigo-50 py-20">
+      <div class="max-w-6xl mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center mb-12">About Klicktape</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+          <div>
+            <p class="text-gray-600 mb-4">
+              Klicktape is a privacy-first social media platform designed to
+              give you control over your data. We believe in creating a safe,
+              ad-free space where you can connect authentically without being
+              tracked or exploited.
+            </p>
+            <p class="text-gray-600 mb-4">
+              Our mission is to redefine social media by prioritizing trust,
+              transparency, and user privacy. Join us in building a better
+              digital future.
+            </p>
+            <a
+              href="#"
+              class="bg-primary text-white px-8 py-3 rounded-full hover:bg-secondary transition-colors"
+              >Join the Movement</a
+            >
+          </div>
+          <div
+            class="bg-white/20 backdrop-blur rounded-lg overflow-hidden shadow-glass h-64 border border-white/20"
+          >
+            <img
+              src="images/about.jpg"
+              alt="Privacy-focused social connection illustration"
+              class="w-full h-full object-cover"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section
+      id="testimonials"
+      class="bg-gradient-to-br from-indigo-50 to-purple-50 py-20"
+    >
+      <div class="max-w-6xl mx-auto px-4">
+        <h2
+          class="text-3xl font-bold text-center mb-12 bg-gradient-to-r from-primary to-secondary text-transparent bg-clip-text"
+        >
+          What People Are Saying
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div
+            class="bg-white/80 backdrop-blur p-8 rounded-lg shadow-glass border border-white/20"
+          >
+            <p class="text-gray-600 mb-4">
+              "Klicktape is a breath of fresh air in the social media space.
+              Finally, a platform that respects my privacy!"
+            </p>
+            <p class="font-bold text-primary">- Maya, Social Media User</p>
+          </div>
+          <div
+            class="bg-white/80 backdrop-blur p-8 rounded-lg shadow-glass border border-white/20"
+          >
+            <p class="text-gray-600 mb-4">
+              "I love the ad-free experience. It's so refreshing to use a
+              platform that doesn't track my every move."
+            </p>
+            <p class="font-bold text-primary">- Raj, Tech Enthusiast</p>
+          </div>
+          <div
+            class="bg-white/80 backdrop-blur p-8 rounded-lg shadow-glass border border-white/20"
+          >
+            <p class="text-gray-600 mb-4">
+              "The anonymous rooms feature is amazing. It's great to connect
+              with people without worrying about privacy."
+            </p>
+            <p class="font-bold text-primary">- Priya, Content Creator</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="bg-gradient-to-br from-white to-pink-50 py-20">
+      <div class="max-w-6xl mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center mb-12">
+          Frequently Asked Questions
+        </h2>
+        <div class="space-y-6">
+          <div
+            class="bg-white/80 backdrop-blur p-6 rounded-lg shadow-glass border border-white/20"
+          >
+            <h3 class="font-bold text-lg mb-2 text-primary">
+              What makes Klicktape different from other social media platforms?
+            </h3>
+            <p class="text-gray-600">
+              Klicktape is built with privacy and transparency at its core.
+              Unlike other platforms, we don't track your data or show you ads.
+            </p>
+          </div>
+          <div
+            class="bg-white/80 backdrop-blur p-6 rounded-lg shadow-glass border border-white/20"
+          >
+            <h3 class="font-bold text-lg mb-2 text-primary">
+              Is Klicktape free to use?
+            </h3>
+            <p class="text-gray-600">
+              Yes, Klicktape offers a free version with basic features. We also
+              have a premium subscription for an ad-free experience.
+            </p>
+          </div>
+          <div
+            class="bg-white/80 backdrop-blur p-6 rounded-lg shadow-glass border border-white/20"
+          >
+            <h3 class="font-bold text-lg mb-2 text-primary">
+              How does Klicktape ensure user privacy?
+            </h3>
+            <p class="text-gray-600">
+              We use end-to-end encryption and strict data protection measures
+              to ensure your data is safe and private.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer
+      class="bg-gradient-to-br from-indigo-900 to-purple-900 text-white py-8"
+    >
+      <div class="max-w-6xl mx-auto px-4 text-center">
+        <p class="text-white/80">&copy; 2023 Klicktape. All rights reserved.</p>
+      </div>
+    </footer>
+    <script type="module">
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
+      // TODO: Add SDKs for Firebase products that you want to use
+      // https://firebase.google.com/docs/web/setup#available-libraries
+    
+      // Your web app's Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyBArk7fEX0Jgi26Phtp1t96XY-FxEtkN7M",
+        authDomain: "klicktape-d087a.firebaseapp.com",
+        projectId: "klicktape-d087a",
+        storageBucket: "klicktape-d087a.firebasestorage.app",
+        messagingSenderId: "537131358526",
+        appId: "1:537131358526:web:22ba55670809a5b107746f"
+      };
+    
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+    </script>
+  </body>
+</html>

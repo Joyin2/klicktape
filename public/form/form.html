@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Klicktape - Join the Waitlist</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              gold: '#FFD700',
+              black: '#000000',
+              crystal: '#1A1A33',
+              prism: '#FF9500',
+              lightgold: '#FFF8E1',
+            },
+            boxShadow: {
+              prism: '0 0 30px rgba(255, 149, 0, 0.8), 0 0 60px rgba(255, 149, 0, 0.4)',
+              gold: '0 0 25px rgba(255, 215, 0, 0.9)',
+            },
+            fontFamily: {
+              exo: ['Exo 2', 'sans-serif'],
+              space: ['Space Mono', 'monospace'],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        margin: 0;
+        background: linear-gradient(to bottom, #000000, #1A1A33);
+        color: #FFF8E1;
+        font-family: 'Space Mono', monospace;
+        overflow-x: hidden;
+      }
+      .prism-card {
+        background: linear-gradient(135deg, rgba(26, 26, 51, 0.9), rgba(0, 0, 0, 0.7));
+        border: 1px solid #FFD700;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .prism-card:hover {
+        transform: scale(1.02);
+        box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+      }
+      input, textarea {
+        background: rgba(255, 248, 225, 0.1);
+        border: 1px solid #FFD700;
+        color: #FFF8E1;
+        transition: border-color 0.3s ease;
+      }
+      input:focus, textarea:focus {
+        border-color: #FF9500;
+        outline: none;
+        box-shadow: 0 0 10px rgba(255, 149, 0, 0.5);
+      }
+      label {
+        color: #FFD700;
+      }
+      ::placeholder {
+        color: #FFF8E1;
+        opacity: 0.7;
+      }
+      .mobile-menu {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.95);
+        z-index: 100;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+      }
+      .mobile-menu.active {
+        transform: translateX(0);
+      }
+      .hamburger {
+        display: block;
+        font-size: 2rem;
+        color: #FFD700;
+        cursor: pointer;
+      }
+      @media (min-width: 768px) {
+        .hamburger {
+          display: none;
+        }
+        .mobile-menu {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Navbar -->
+    <nav class="fixed top-0 w-full bg-black/90 backdrop-blur-2xl z-50 shadow-gold">
+      <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+        <a href="../index.html" class="text-2xl sm:text-3xl font-exo text-gold">Klicktape</a>
+        <div class="hidden md:flex space-x-8 text-sm font-space uppercase tracking-widest">
+          <a href="../index.html#features" class="hover:text-prism transition-colors">Features</a>
+          <a href="../index.html#about" class="hover:text-prism transition-colors">About</a>
+          <a href="../index.html#how-it-works" class="hover:text-prism transition-colors">How It Works</a>
+          <a href="../index.html#testimonials" class="hover:text-prism transition-colors">Testimonials</a>
+          <a href="../index.html#faq" class="hover:text-prism transition-colors">FAQ</a>
+        </div>
+        <a href="../index.html" class="hidden md:block bg-gradient-to-r from-gold to-prism text-black px-4 py-2 rounded-full font-space hover:shadow-prism transition-all">Back</a>
+        <div class="hamburger md:hidden">☰</div>
+      </div>
+      <!-- Mobile Menu -->
+      <div class="mobile-menu">
+        <div class="absolute top-4 right-4 text-3xl text-gold cursor-pointer close-menu">×</div>
+        <a href="../index.html#features" class="text-2xl font-space text-lightgold py-4 hover:text-prism">Features</a>
+        <a href="../index.html#about" class="text-2xl font-space text-lightgold py-4 hover:text-prism">About</a>
+        <a href="../index.html#how-it-works" class="text-2xl font-space text-lightgold py-4 hover:text-prism">How It Works</a>
+        <a href="../index.html#testimonials" class="text-2xl font-space text-lightgold py-4 hover:text-prism">Testimonials</a>
+        <a href="../index.html#faq" class="text-2xl font-space text-lightgold py-4 hover:text-prism">FAQ</a>
+        <a href="../index.html" class="bg-gradient-to-r from-gold to-prism text-black px-6 py-3 rounded-full font-space text-lg mt-6 hover:shadow-prism transition-all">Back</a>
+      </div>
+    </nav>
+
+    <!-- Form Section -->
+    <section class="max-w-4xl mx-auto px-4 py-12 mt-20">
+      <div class="prism-card rounded-lg shadow-lg p-8">
+        <h2 class="text-3xl sm:text-4xl font-exo text-center mb-8 text-gold">Join the Waitlist</h2>
+        <form action="" id="contactForm" class="space-y-6">
+          <!-- Name Field -->
+          <div>
+            <label for="name" class="block text-sm font-medium">Name</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              placeholder="Enter your name"
+              class="mt-1 block w-full px-4 py-2 rounded-lg shadow-sm"
+              required
+            />
+          </div>
+
+          <!-- Email Field -->
+          <div>
+            <label for="email" class="block text-sm font-medium">Email</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Enter your email"
+              class="mt-1 block w-full px-4 py-2 rounded-lg shadow-sm"
+              required
+            />
+          </div>
+
+          <!-- Phone Field -->
+          <div>
+            <label for="phone" class="block text-sm font-medium">Phone</label>
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              placeholder="Enter your phone number"
+              class="mt-1 block w-full px-4 py-2 rounded-lg shadow-sm"
+            />
+          </div>
+
+          <!-- Message Field -->
+          <div>
+            <label for="message" class="block text-sm font-medium">Message</label>
+            <textarea
+              id="message"
+              name="message"
+              rows="4"
+              placeholder="Enter your message"
+              class="mt-1 block w-full px-4 py-2 rounded-lg shadow-sm"
+            ></textarea>
+          </div>
+
+          <!-- Submit Button -->
+          <div>
+            <button
+              type="submit"
+              class="w-full bg-gradient-to-r from-gold to-prism text-black px-6 py-3 rounded-lg font-space hover:shadow-gold transition-all"
+            >
+              Submit
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- Firebase v11 SDK -->
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
+      import {
+        getDatabase,
+        ref,
+        push,
+        serverTimestamp,
+      } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-database.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyBArk7fEX0Jgi26Phtp1t96XY-FxEtkN7M",
+        authDomain: "klicktape-d087a.firebaseapp.com",
+        databaseURL: "https://klicktape-d087a-default-rtdb.firebaseio.com/",
+        projectId: "klicktape-d087a",
+        storageBucket: "klicktape-d087a.firebasestorage.app",
+        messagingSenderId: "537131358526",
+        appId: "1:537131358526:web:22ba55670809a5b107746f",
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const database = getDatabase(app);
+
+      document
+        .getElementById("contactForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+
+          const name = document.getElementById("name").value;
+          const email = document.getElementById("email").value;
+          const phone = document.getElementById("phone").value;
+          const message = document.getElementById("message").value;
+
+          push(ref(database, "waitlist"), {
+            name: name,
+            email: email,
+            phone: phone,
+            message: message,
+            timestamp: serverTimestamp(),
+          })
+            .then(() => {
+              alert("Form submitted successfully!");
+              document.getElementById("contactForm").reset();
+            })
+            .catch((error) => {
+              console.error("Error submitting form: ", error);
+              alert("There was an error submitting the form. Please try again.");
+            });
+        });
+
+      // Mobile Menu Toggle
+      const hamburger = document.querySelector('.hamburger');
+      const mobileMenu = document.querySelector('.mobile-menu');
+      const closeMenu = document.querySelector('.close-menu');
+      hamburger.addEventListener('click', () => mobileMenu.classList.add('active'));
+      closeMenu.addEventListener('click', () => mobileMenu.classList.remove('active'));
+    </script>
+  </body>
+</html>
