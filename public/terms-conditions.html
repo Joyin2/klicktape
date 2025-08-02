@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms & Conditions - Klicktape</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              gold: '#FFD700',
+              black: '#000000',
+              crystal: '#1A1A33',
+              prism: '#FF9500',
+              lightgold: '#FFF8E1',
+            },
+            boxShadow: {
+              prism: '0 0 30px rgba(255, 149, 0, 0.8), 0 0 60px rgba(255, 149, 0, 0.4)',
+              gold: '0 0 25px rgba(255, 215, 0, 0.9)',
+            },
+            fontFamily: {
+              exo: ['Exo 2', 'sans-serif'],
+              space: ['Space Mono', 'monospace'],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+        body {
+            margin: 0;
+            background: #000000;
+            color: #FFF8E1;
+            font-family: 'Space Mono', monospace;
+            overflow-x: hidden;
+            cursor: none;
+        }
+        #lattice {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.5; /* Reduced for mobile performance */
+        }
+        .cursor {
+            display: none; /* Hidden on mobile by default */
+        }
+        @media (min-width: 768px) {
+            .cursor {
+                display: block;
+                position: fixed;
+                width: 25px;
+                height: 25px;
+                border: 2px solid #FFD700;
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 9999;
+                transition: transform 0.2s ease, border-color 0.3s ease;
+            }
+            .cursor.hover {
+                transform: scale(1.5);
+                border-color: #FF9500;
+            }
+        }
+        .prism-card {
+            background: linear-gradient(135deg, rgba(26, 26, 51, 0.9), rgba(0, 0, 0, 0.7));
+            border: 1px solid #FFD700;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        .prism-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.6);
+        }
+        .section-card {
+            background: linear-gradient(135deg, rgba(26, 26, 51, 0.8), rgba(0, 0, 0, 0.6));
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(255, 149, 0, 0.1), rgba(255, 215, 0, 0.1));
+            border: 1px solid rgba(255, 149, 0, 0.3);
+        }
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #FFD700, #FF9500);
+            color: #000;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            font-size: 18px;
+            display: none;
+            transition: all 0.3s;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+            font-weight: bold;
+        }
+        .back-to-top:hover {
+            transform: translateY(-2px) scale(1.1);
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.8);
+        }
+        /* Mobile Navbar */
+        .mobile-menu {
+            display: none; /* Hidden by default */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 100;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .mobile-menu.active {
+            display: flex;
+        }
+        .hamburger {
+            display: block;
+            font-size: 2rem;
+            color: #FFD700;
+            cursor: pointer;
+            z-index: 101; /* Ensure it's above other elements */
+        }
+        @media (min-width: 768px) {
+            .hamburger {
+                display: none;
+            }
+            .mobile-menu {
+                display: none !important; /* Force hide on desktop */
+            }
+        }
+        .liquid-gold {
+            animation: liquid 4s infinite;
+        }
+        @keyframes liquid {
+            0%, 100% { transform: translateY(0); }
+            25% { transform: translateY(-3px); }
+            50% { transform: translateY(-6px); }
+            75% { transform: translateY(-3px); }
+        }
+        @media (max-width: 768px) {
+            body {
+                cursor: auto;
+            }
+            .cursor {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 3D Prism Lattice Background -->
+    <div id="lattice"></div>
+
+    <!-- Custom Cursor -->
+    <div class="cursor"></div>
+
+    <!-- Navbar -->
+    <nav class="fixed top-0 w-full bg-black/90 backdrop-blur-2xl z-50 shadow-gold">
+      <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+        <a href="index.html" class="text-2xl sm:text-3xl font-exo text-gold liquid-gold">Klicktape</a>
+        <div class="hidden md:flex space-x-8 text-sm font-space uppercase tracking-widest">
+          <a href="index.html#features" class="hover:text-prism transition-colors">Features</a>
+          <a href="index.html#about" class="hover:text-prism transition-colors">About</a>
+          <a href="index.html#how-it-works" class="hover:text-prism transition-colors">How It Works</a>
+          <a href="index.html#testimonials" class="hover:text-prism transition-colors">Testimonials</a>
+          <a href="index.html#faq" class="hover:text-prism transition-colors">FAQ</a>
+        </div>
+        <a href="form/form.html" class="hidden md:block bg-gradient-to-r from-gold to-prism text-black px-4 py-2 rounded-full font-space hover:shadow-prism transition-all">Join Waitlist</a>
+        <div class="hamburger md:hidden">☰</div>
+      </div>
+      <!-- Mobile Menu -->
+      <div class="mobile-menu">
+        <div class="absolute top-4 right-4 text-3xl text-gold cursor-pointer close-menu">×</div>
+        <a href="index.html#features" class="text-2xl font-space text-lightgold py-4 hover:text-prism">Features</a>
+        <a href="index.html#about" class="text-2xl font-space text-lightgold py-4 hover:text-prism">About</a>
+        <a href="index.html#how-it-works" class="text-2xl font-space text-lightgold py-4 hover:text-prism">How It Works</a>
+        <a href="index.html#testimonials" class="text-2xl font-space text-lightgold py-4 hover:text-prism">Testimonials</a>
+        <a href="index.html#faq" class="text-2xl font-space text-lightgold py-4 hover:text-prism">FAQ</a>
+        <a href="form/form.html" class="bg-gradient-to-r from-gold to-prism text-black px-6 py-3 rounded-full font-space text-lg mt-6 hover:shadow-prism transition-all">Join Waitlist</a>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="min-h-screen pt-20 pb-16">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+
+            <!-- Header -->
+            <div class="text-center mb-16">
+                <h1 class="text-5xl md:text-6xl font-exo text-gold mb-4 shadow-gold">
+                    TERMS OF USE
+                </h1>
+                <p class="text-lightgold/80 font-space text-lg">Last updated June 16, 2025</p>
+                <div class="w-32 h-1 bg-gradient-to-r from-gold to-prism mx-auto mt-6 rounded-full"></div>
+            </div>
+
+            <!-- Agreement Section -->
+            <div class="section-card rounded-xl p-8 mb-8 border-l-4 border-gold">
+                <h2 class="text-3xl font-exo text-gold mb-6 flex items-center">
+                    <span class="w-8 h-8 bg-gold/20 rounded-full flex items-center justify-center mr-3">
+                        <span class="text-gold text-lg">⚖️</span>
+                    </span>
+                    AGREEMENT TO OUR LEGAL TERMS
+                </h2>
+
+                <div class="highlight-box rounded-lg p-6 mb-6">
+                    <h3 class="text-xl font-exo text-prism mb-4 flex items-center">
+                        <span class="text-2xl mr-2">🏢</span>
+                        Company Information
+                    </h3>
+                    <p class="text-lightgold/90 font-space leading-relaxed mb-4">We are <span class="text-gold font-bold">Klicktape</span> ('Company', 'we', 'us', or 'our'), a company registered in India at Tarunodoy Road, Silchar, Assam 788123.</p>
+                    <p class="text-lightgold/90 font-space leading-relaxed">We operate the website <span class="text-gold font-bold">https://www.klicktape.com</span> (the 'Site'), the mobile application <span class="text-gold font-bold">Klicktape</span> (the 'App'), as well as any other related products and services that refer or link to these legal terms (the 'Legal Terms') (collectively, the 'Services').</p>
+                </div>
+
+                <div class="prism-card rounded-lg p-6 mb-6">
+                    <h3 class="text-xl font-exo text-prism mb-4 flex items-center">
+                        <span class="text-2xl mr-2">🔒</span>
+                        About Klicktape
+                    </h3>
+                    <p class="text-lightgold/90 font-space leading-relaxed mb-4">Klicktape is a privacy-first social media platform where users can share stories, photos, reels, and connect securely. Unlike traditional apps, Klicktape avoids personalized ads and third-party data sharing, using contextual advertising based on viewed content to protect user privacy.</p>
+
+                    <h4 class="text-lg font-exo text-gold mb-3">Key Features:</h4>
+                    <ul class="text-lightgold/80 font-space space-y-2 ml-6">
+                        <li class="flex items-start"><span class="text-prism mr-2">✨</span>Anonymous Rooms for safe discussions</li>
+                        <li class="flex items-start"><span class="text-prism mr-2">✨</span>Ad-free premium subscription</li>
+                        <li class="flex items-start"><span class="text-prism mr-2">✨</span>Shoppable content overlays</li>
+                        <li class="flex items-start"><span class="text-prism mr-2">✨</span>Gamified engagement features</li>
+                        <li class="flex items-start"><span class="text-prism mr-2">✨</span>Privacy-focused DMs, Stories, Reels, and Photo sharing</li>
+                    </ul>
+                    <p class="text-lightgold/90 font-space leading-relaxed mt-4">Klicktape offers a secure, transparent alternative to conventional social networks, empowering users with full data control.</p>
+                </div>
+
+                <div class="highlight-box rounded-lg p-6 mb-6">
+                    <h3 class="text-xl font-exo text-prism mb-4 flex items-center">
+                        <span class="text-2xl mr-2">📞</span>
+                        Contact Information
+                    </h3>
+                    <p class="text-lightgold/90 font-space leading-relaxed mb-3">You can contact us by:</p>
+                    <ul class="text-lightgold/80 font-space space-y-2 ml-6">
+                        <li class="flex items-start"><span class="text-gold mr-2">📞</span><span class="text-gold font-bold">Phone:</span> 9678011096</li>
+                        <li class="flex items-start"><span class="text-gold mr-2">📧</span><span class="text-gold font-bold">Email:</span> director@klicktape.com</li>
+                        <li class="flex items-start"><span class="text-gold mr-2">📍</span><span class="text-gold font-bold">Mail:</span> Tarunodoy Road, Silchar, Assam 788123, India</li>
+                    </ul>
+                </div>
+
+                <div class="bg-gradient-to-r from-prism/20 to-gold/20 rounded-lg p-6 border border-prism/30 mb-6">
+                    <p class="text-lightgold/90 font-space leading-relaxed mb-4">These Legal Terms constitute a legally binding agreement made between you, whether personally or on behalf of an entity ('you'), and Klicktape, concerning your access to and use of the Services. You agree that by accessing the Services, you have read, understood, and agreed to be bound by all of these Legal Terms.</p>
+                    <p class="text-gold font-space font-bold text-center p-4 bg-black/30 rounded-lg border border-gold/30">IF YOU DO NOT AGREE WITH ALL OF THESE LEGAL TERMS, THEN YOU ARE EXPRESSLY PROHIBITED FROM USING THE SERVICES AND YOU MUST DISCONTINUE USE IMMEDIATELY.</p>
+                </div>
+
+                <div class="space-y-4 text-lightgold/90 font-space leading-relaxed">
+                    <p>We will provide you with prior notice of any scheduled changes to the Services you are using. The modified Legal Terms will become effective upon posting or notifying you by director@klicktape.com, as stated in the email message. By continuing to use the Services after the effective date of any changes, you agree to be bound by the modified terms.</p>
+
+                    <p><span class="text-gold font-bold">Age Requirement:</span> The Services are intended for users who are at least 13 years of age. All users who are minors in the jurisdiction in which they reside (generally under the age of 18) must have the permission of, and be directly supervised by, their parent or guardian to use the Services. If you are a minor, you must have your parent or guardian read and agree to these Legal Terms prior to you using the Services.</p>
+
+                    <p>We recommend that you print a copy of these Legal Terms for your records.</p>
+                </div>
+            </div>
+
+        <div class="table-of-contents">
+            <h3>TABLE OF CONTENTS</h3>
+            <div class="toc-grid">
+                <div class="toc-item">1. OUR SERVICES</div>
+                <div class="toc-item">2. INTELLECTUAL PROPERTY RIGHTS</div>
+                <div class="toc-item">3. USER REPRESENTATIONS</div>
+                <div class="toc-item">4. USER REGISTRATION</div>
+                <div class="toc-item">5. PRODUCTS</div>
+                <div class="toc-item">6. PURCHASES AND PAYMENT</div>
+                <div class="toc-item">7. SUBSCRIPTIONS</div>
+                <div class="toc-item">8. RETURN/REFUNDS POLICY</div>
+                <div class="toc-item">9. SOFTWARE</div>
+                <div class="toc-item">10. PROHIBITED ACTIVITIES</div>
+                <div class="toc-item">11. USER GENERATED CONTRIBUTIONS</div>
+                <div class="toc-item">12. CONTRIBUTION LICENCE</div>
+                <div class="toc-item">13. MOBILE APPLICATION LICENCE</div>
+                <div class="toc-item">14. SOCIAL MEDIA</div>
+                <div class="toc-item">15. THIRD-PARTY WEBSITES AND CONTENT</div>
+                <div class="toc-item">16. SERVICES MANAGEMENT</div>
+                <div class="toc-item">17. DIGITAL MILLENNIUM COPYRIGHT ACT (DMCA) NOTICE AND POLICY</div>
+                <div class="toc-item">18. TERM AND TERMINATION</div>
+                <div class="toc-item">19. MODIFICATIONS AND INTERRUPTIONS</div>
+                <div class="toc-item">20. GOVERNING LAW</div>
+                <div class="toc-item">21. DISPUTE RESOLUTION</div>
+                <div class="toc-item">22. CORRECTIONS</div>
+                <div class="toc-item">23. DISCLAIMER</div>
+                <div class="toc-item">24. LIMITATIONS OF LIABILITY</div>
+                <div class="toc-item">25. INDEMNIFICATION</div>
+                <div class="toc-item">26. USER DATA</div>
+                <div class="toc-item">27. ELECTRONIC COMMUNICATIONS, TRANSACTIONS, AND SIGNATURES</div>
+                <div class="toc-item">28. CALIFORNIA USERS AND RESIDENTS</div>
+                <div class="toc-item">29. MISCELLANEOUS</div>
+                <div class="toc-item">30. CONTACT US</div>
+            </div>
+        </div>
+
+        <div class="section" id="our-services">
+            <h2>1. OUR SERVICES</h2>
+            <p>The information provided when using the Services is not intended for distribution to or use by any person or entity in any jurisdiction or country where such distribution or use would be contrary to law or regulation or which would subject us to any registration requirement within such jurisdiction or country. Accordingly, those persons who choose to access the Services from other locations do so on their own initiative and are solely responsible for compliance with local laws, if and to the extent local laws are applicable.</p>
+        </div>
+
+        <div class="section" id="intellectual-property">
+            <h2>2. INTELLECTUAL PROPERTY RIGHTS</h2>
+
+            <h3>Our intellectual property</h3>
+            <p>We are the owner or the licensee of all intellectual property rights in our Services, including all source code, databases, functionality, software, website designs, audio, video, text, photographs, and graphics in the Services (collectively, the 'Content'), as well as the trademarks, service marks, and logos contained therein (the 'Marks').</p>
+
+            <p>Our Content and Marks are protected by copyright and trademark laws (and various other intellectual property rights and unfair competition laws) and treaties in the United States and around the world.</p>
+
+            <p>The Content and Marks are provided in or through the Services 'AS IS' for your personal, non-commercial use or internal business purpose only.</p>
+
+            <h3>Your use of our Services</h3>
+            <p>Subject to your compliance with these Legal Terms, including the 'PROHIBITED ACTIVITIES' section below, we grant you a non-exclusive, non-transferable, revocable licence to:</p>
+            <ul>
+                <li>access the Services; and</li>
+                <li>download or print a copy of any portion of the Content to which you have properly gained access,</li>
+            </ul>
+            <p>solely for your personal, non-commercial use or internal business purpose.</p>
+
+            <p>Except as set out in this section or elsewhere in our Legal Terms, no part of the Services and no Content or Marks may be copied, reproduced, aggregated, republished, uploaded, posted, publicly displayed, encoded, translated, transmitted, distributed, sold, licensed, or otherwise exploited for any commercial purpose whatsoever, without our express prior written permission.</p>
+
+            <p>If you wish to make any use of the Services, Content, or Marks other than as set out in this section or elsewhere in our Legal Terms, please address your request to: <strong>director@klicktape.com</strong>. If we ever grant you the permission to post, reproduce, or publicly display any part of our Services or Content, you must identify us as the owners or licensors of the Services, Content, or Marks and ensure that any copyright or proprietary notice appears or is visible on posting, reproducing, or displaying our Content.</p>
+
+            <p>We reserve all rights not expressly granted to you in and to the Services, Content, and Marks.</p>
+
+            <p>Any breach of these Intellectual Property Rights will constitute a material breach of our Legal Terms and your right to use our Services will terminate immediately.</p>
+
+            <h3>Your submissions and contributions</h3>
+            <p>Please review this section and the 'PROHIBITED ACTIVITIES' section carefully prior to using our Services to understand the (a) rights you give us and (b) obligations you have when you post or upload any content through the Services.</p>
+
+            <p><strong>Submissions:</strong> By directly sending us any question, comment, suggestion, idea, feedback, or other information about the Services ('Submissions'), you agree to assign to us all intellectual property rights in such Submission. You agree that we shall own this Submission and be entitled to its unrestricted use and dissemination for any lawful purpose, commercial or otherwise, without acknowledgment or compensation to you.</p>
+
+            <p><strong>Contributions:</strong> The Services may invite you to chat, contribute to, or participate in blogs, message boards, online forums, and other functionality during which you may create, submit, post, display, transmit, publish, distribute, or broadcast content and materials to us or through the Services, including but not limited to text, writings, video, audio, photographs, music, graphics, comments, reviews, rating suggestions, personal information, or other material ('Contributions'). Any Submission that is publicly posted shall also be treated as a Contribution.</p>
+
+            <p>You understand that Contributions may be viewable by other users of the Services and possibly through third-party websites.</p>
+
+            <h3>Copyright infringement</h3>
+            <p>We respect the intellectual property rights of others. If you believe that any material available on or through the Services infringes upon any copyright you own or control, please immediately refer to the 'DIGITAL MILLENNIUM COPYRIGHT ACT (DMCA) NOTICE AND POLICY' section below.</p>
+        </div>
+
+        <div class="section" id="user-representations">
+            <h2>3. USER REPRESENTATIONS</h2>
+            <p>By using the Services, you represent and warrant that:</p>
+            <ol>
+                <li>all registration information you submit will be true, accurate, current, and complete;</li>
+                <li>you will maintain the accuracy of such information and promptly update such registration information as necessary;</li>
+                <li>you have the legal capacity and you agree to comply with these Legal Terms;</li>
+                <li>you are not under the age of 13;</li>
+                <li>you are not a minor in the jurisdiction in which you reside, or if a minor, you have received parental permission to use the Services;</li>
+                <li>you will not access the Services through automated or non-human means, whether through a bot, script or otherwise;</li>
+                <li>you will not use the Services for any illegal or unauthorised purpose; and</li>
+                <li>your use of the Services will not violate any applicable law or regulation.</li>
+            </ol>
+            <p>If you provide any information that is untrue, inaccurate, not current, or incomplete, we have the right to suspend or terminate your account and refuse any and all current or future use of the Services (or any portion thereof).</p>
+        </div>
+
+        <div class="section" id="user-registration">
+            <h2>4. USER REGISTRATION</h2>
+            <p>You may be required to register to use the Services. You agree to keep your password confidential and will be responsible for all use of your account and password. We reserve the right to remove, reclaim, or change a username you select if we determine, in our sole discretion, that such username is inappropriate, obscene, or otherwise objectionable.</p>
+        </div>
+
+        <div class="section" id="products">
+            <h2>5. PRODUCTS</h2>
+            <p>We make every effort to display as accurately as possible the colours, features, specifications, and details of the products available on the Services. However, we do not guarantee that the colours, features, specifications, and details of the products will be accurate, complete, reliable, current, or free of other errors, and your electronic display may not accurately reflect the actual colours and details of the products. All products are subject to availability, and we cannot guarantee that items will be in stock. We reserve the right to discontinue any products at any time for any reason. Prices for all products are subject to change.</p>
+        </div>
+
+        <div class="section" id="purchases-payment">
+            <h2>6. PURCHASES AND PAYMENT</h2>
+            <p>We accept the following forms of payment:</p>
+            <ul>
+                <li>Visa</li>
+                <li>Mastercard</li>
+                <li>PayPal</li>
+                <li>American Express</li>
+                <li>Discover</li>
+                <li>Unified Payments Interface</li>
+            </ul>
+            <p>You agree to provide current, complete, and accurate purchase and account information for all purchases made via the Services. You further agree to promptly update account and payment information, including email address, payment method, and payment card expiration date, so that we can complete your transactions and contact you as needed. Sales tax will be added to the price of purchases as deemed required by us. We may change prices at any time. All payments shall be in Rupees.</p>
+
+            <p>You agree to pay all charges at the prices then in effect for your purchases and any applicable shipping fees, and you authorise us to charge your chosen payment provider for any such amounts upon placing your order. We reserve the right to correct any errors or mistakes in pricing, even if we have already requested or received payment.</p>
+
+            <p>We reserve the right to refuse any order placed through the Services. We may, in our sole discretion, limit or cancel quantities purchased per person, per household, or per order. These restrictions may include orders placed by or under the same customer account, the same payment method, and/or orders that use the same billing or shipping address. We reserve the right to limit or prohibit orders that, in our sole judgement, appear to be placed by dealers, resellers, or distributors.</p>
+        </div>
+
+        <div class="section" id="subscriptions">
+            <h2>7. SUBSCRIPTIONS</h2>
+
+            <h3>Billing and Renewal</h3>
+            <p>Your subscription will continue and automatically renew unless cancelled. You consent to our charging your payment method on a recurring basis without requiring your prior approval for each recurring charge, until such time as you cancel the applicable order. The length of your billing cycle will depend on the type of subscription plan you choose when you subscribed to the Services.</p>
+
+            <h3>Free Trial</h3>
+            <p>We offer a 30-day free trial to new users who register with the Services. The account will be charged according to the user's chosen subscription at the end of the free trial.</p>
+
+            <h3>Cancellation</h3>
+            <p>You can cancel your subscription at any time by logging into your account. Your cancellation will take effect at the end of the current paid term. If you have any questions or are unsatisfied with our Services, please email us at <strong>director@klicktape.com</strong>.</p>
+
+            <h3>Fee Changes</h3>
+            <p>We may, from time to time, make changes to the subscription fee and will communicate any price changes to you in accordance with applicable law.</p>
+        </div>
+
+        <div class="section" id="refunds">
+            <h2>8. RETURN/REFUNDS POLICY</h2>
+            <div class="important-notice">
+                <p><strong>All sales are final and no refund will be issued.</strong></p>
+            </div>
+        </div>
+
+        <div class="section" id="software">
+            <h2>9. SOFTWARE</h2>
+            <p>We may include software for use in connection with our Services. If such software is accompanied by an end user licence agreement ('EULA'), the terms of the EULA will govern your use of the software. If such software is not accompanied by a EULA, then we grant to you a non-exclusive, revocable, personal, and non-transferable licence to use such software solely in connection with our services and in accordance with these Legal Terms. Any software and any related documentation is provided 'AS IS' without warranty of any kind, either express or implied, including, without limitation, the implied warranties of merchantability, fitness for a particular purpose, or non-infringement. You accept any and all risk arising out of use or performance of any software. You may not reproduce or redistribute any software except in accordance with the EULA or these Legal Terms.</p>
+        </div>
+
+        <div class="section" id="prohibited-activities">
+            <h2>10. PROHIBITED ACTIVITIES</h2>
+            <p>You may not access or use the Services for any purpose other than that for which we make the Services available. The Services may not be used in connection with any commercial endeavours except those that are specifically endorsed or approved by us.</p>
+
+            <p>As a user of the Services, you agree not to:</p>
+            <ul>
+                <li>Systematically retrieve data or other content from the Services to create or compile, directly or indirectly, a collection, compilation, database, or directory without written permission from us.</li>
+                <li>Trick, defraud, or mislead us and other users, especially in any attempt to learn sensitive account information such as user passwords.</li>
+                <li>Circumvent, disable, or otherwise interfere with security-related features of the Services, including features that prevent or restrict the use or copying of any Content or enforce limitations on the use of the Services and/or the Content contained therein.</li>
+                <li>Disparage, tarnish, or otherwise harm, in our opinion, us and/or the Services.</li>
+                <li>Use any information obtained from the Services in order to harass, abuse, or harm another person.</li>
+                <li>Make improper use of our support services or submit false reports of abuse or misconduct.</li>
+                <li>Use the Services in a manner inconsistent with any applicable laws or regulations.</li>
+                <li>Engage in unauthorised framing of or linking to the Services.</li>
+                <li>Upload or transmit (or attempt to upload or to transmit) viruses, Trojan horses, or other material, including excessive use of capital letters and spamming (continuous posting of repetitive text), that interferes with any party's uninterrupted use and enjoyment of the Services or modifies, impairs, disrupts, alters, or interferes with the use, features, functions, operation, or maintenance of the Services.</li>
+                <li>Engage in any automated use of the system, such as using scripts to send comments or messages, or using any data mining, robots, or similar data gathering and extraction tools.</li>
+                <li>Delete the copyright or other proprietary rights notice from any Content.</li>
+                <li>Attempt to impersonate another user or person or use the username of another user.</li>
+                <li>Upload or transmit (or attempt to upload or to transmit) any material that acts as a passive or active information collection or transmission mechanism, including without limitation, clear graphics interchange formats ('gifs'), 1×1 pixels, web bugs, cookies, or other similar devices (sometimes referred to as 'spyware' or 'passive collection mechanisms' or 'pcms').</li>
+                <li>Interfere with, disrupt, or create an undue burden on the Services or the networks or services connected to the Services.</li>
+                <li>Harass, annoy, intimidate, or threaten any of our employees or agents engaged in providing any portion of the Services to you.</li>
+                <li>Attempt to bypass any measures of the Services designed to prevent or restrict access to the Services, or any portion of the Services.</li>
+                <li>Copy or adapt the Services' software, including but not limited to Flash, PHP, HTML, JavaScript, or other code.</li>
+                <li>Except as permitted by applicable law, decipher, decompile, disassemble, or reverse engineer any of the software comprising or in any way making up a part of the Services.</li>
+                <li>Except as may be the result of standard search engine or Internet browser usage, use, launch, develop, or distribute any automated system, including without limitation, any spider, robot, cheat utility, scraper, or offline reader that accesses the Services, or use or launch any unauthorised script or other software.</li>
+                <li>Use a buying agent or purchasing agent to make purchases on the Services.</li>
+                <li>Make any unauthorised use of the Services, including collecting usernames and/or email addresses of users by electronic or other means for the purpose of sending unsolicited email, or creating user accounts by automated means or under false pretences.</li>
+                <li>Use the Services as part of any effort to compete with us or otherwise use the Services and/or the Content for any revenue-generating endeavour or commercial enterprise.</li>
+                <li>Use the Services to advertise or offer to sell goods and services.</li>
+            </ul>
+        </div>
+
+        <div class="section" id="governing-law">
+            <h2>20. GOVERNING LAW</h2>
+            <p>These Legal Terms shall be governed by and defined following the laws of India. Klicktape and yourself irrevocably consent that the courts of India shall have exclusive jurisdiction to resolve any dispute which may arise in connection with these Legal Terms.</p>
+        </div>
+
+        <div class="section" id="dispute-resolution">
+            <h2>21. DISPUTE RESOLUTION</h2>
+
+            <h3>Informal Negotiations</h3>
+            <p>To expedite resolution and control the cost of any dispute, controversy, or claim related to these Legal Terms (each a 'Dispute' and collectively, the 'Disputes') brought by either you or us (individually, a 'Party' and collectively, the 'Parties'), the Parties agree to first attempt to negotiate any Dispute (except those Disputes expressly provided below) informally for at least thirty (30) days before initiating arbitration. Such informal negotiations commence upon written notice from one Party to the other Party.</p>
+
+            <h3>Binding Arbitration</h3>
+            <p>Any dispute arising out of or in connection with these Legal Terms, including any question regarding its existence, validity, or termination, shall be referred to and finally resolved by the International Commercial Arbitration Court under the European Arbitration Chamber (Belgium, Brussels, Avenue Louise, 146) according to the Rules of this ICAC, which, as a result of referring to it, is considered as the part of this clause. The number of arbitrators shall be three (3). The seat, or legal place, of arbitration shall be Silchar, India. The language of the proceedings shall be English. The governing law of these Legal Terms shall be the substantive law of India.</p>
+
+            <h3>Restrictions</h3>
+            <p>The Parties agree that any arbitration shall be limited to the Dispute between the Parties individually. To the full extent permitted by law, (a) no arbitration shall be joined with any other proceeding; (b) there is no right or authority for any Dispute to be arbitrated on a class-action basis or to utilise class action procedures; and (c) there is no right or authority for any Dispute to be brought in a purported representative capacity on behalf of the general public or any other persons.</p>
+        </div>
+
+        <div class="section" id="disclaimer">
+            <h2>23. DISCLAIMER</h2>
+            <div class="important-notice">
+                <p><strong>THE SERVICES ARE PROVIDED ON AN AS-IS AND AS-AVAILABLE BASIS. YOU AGREE THAT YOUR USE OF THE SERVICES WILL BE AT YOUR SOLE RISK. TO THE FULLEST EXTENT PERMITTED BY LAW, WE DISCLAIM ALL WARRANTIES, EXPRESS OR IMPLIED, IN CONNECTION WITH THE SERVICES AND YOUR USE THEREOF, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.</strong></p>
+
+                <p><strong>WE MAKE NO WARRANTIES OR REPRESENTATIONS ABOUT THE ACCURACY OR COMPLETENESS OF THE SERVICES' CONTENT OR THE CONTENT OF ANY WEBSITES OR MOBILE APPLICATIONS LINKED TO THE SERVICES AND WE WILL ASSUME NO LIABILITY OR RESPONSIBILITY FOR ANY (1) ERRORS, MISTAKES, OR INACCURACIES OF CONTENT AND MATERIALS, (2) PERSONAL INJURY OR PROPERTY DAMAGE, OF ANY NATURE WHATSOEVER, RESULTING FROM YOUR ACCESS TO AND USE OF THE SERVICES, (3) ANY UNAUTHORISED ACCESS TO OR USE OF OUR SECURE SERVERS AND/OR ANY AND ALL PERSONAL INFORMATION AND/OR FINANCIAL INFORMATION STORED THEREIN, (4) ANY INTERRUPTION OR CESSATION OF TRANSMISSION TO OR FROM THE SERVICES, (5) ANY BUGS, VIRUSES, TROJAN HORSES, OR THE LIKE WHICH MAY BE TRANSMITTED TO OR THROUGH THE SERVICES BY ANY THIRD PARTY, AND/OR (6) ANY ERRORS OR OMISSIONS IN ANY CONTENT AND MATERIALS OR FOR ANY LOSS OR DAMAGE OF ANY KIND INCURRED AS A RESULT OF THE USE OF ANY CONTENT POSTED, TRANSMITTED, OR OTHERWISE MADE AVAILABLE VIA THE SERVICES.</strong></p>
+            </div>
+        </div>
+
+        <div class="section" id="limitations-liability">
+            <h2>24. LIMITATIONS OF LIABILITY</h2>
+            <div class="important-notice">
+                <p><strong>IN NO EVENT WILL WE OR OUR DIRECTORS, EMPLOYEES, OR AGENTS BE LIABLE TO YOU OR ANY THIRD PARTY FOR ANY DIRECT, INDIRECT, CONSEQUENTIAL, EXEMPLARY, INCIDENTAL, SPECIAL, OR PUNITIVE DAMAGES, INCLUDING LOST PROFIT, LOST REVENUE, LOSS OF DATA, OR OTHER DAMAGES ARISING FROM YOUR USE OF THE SERVICES, EVEN IF WE HAVE BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.</strong></p>
+
+                <p><strong>NOTWITHSTANDING ANYTHING TO THE CONTRARY CONTAINED HEREIN, OUR LIABILITY TO YOU FOR ANY CAUSE WHATSOEVER AND REGARDLESS OF THE FORM OF THE ACTION, WILL AT ALL TIMES BE LIMITED TO THE LESSER OF THE AMOUNT PAID, IF ANY, BY YOU TO US DURING THE ONE (1) MONTH PERIOD PRIOR TO ANY CAUSE OF ACTION ARISING OR INR 29.</strong></p>
+            </div>
+        </div>
+
+        <div class="section" id="contact-us">
+            <h2>30. CONTACT US</h2>
+            <div class="contact-info">
+                <p>In order to resolve a complaint regarding the Services or to receive further information regarding use of the Services, please contact us at:</p>
+
+                <p><strong>Klicktape</strong><br>
+                Tarunodoy Road<br>
+                Silchar, Assam 788123<br>
+                India</p>
+
+                <p><strong>Phone:</strong> 9678011096<br>
+                <strong>Email:</strong> director@klicktape.com</p>
+            </div>
+        </div>
+
+        </div>
+
+        <button class="back-to-top" onclick="scrollToTop()" id="backToTopBtn">↑</button>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gradient-to-b from-black to-crystal py-16 border-t border-gold/30 relative overflow-hidden">
+      <!-- Background Pattern -->
+      <div class="absolute inset-0 opacity-10">
+        <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-gold/20 via-transparent to-prism/20"></div>
+        <div class="absolute top-10 left-10 w-32 h-32 border border-gold/30 rotate-45 rounded-lg"></div>
+        <div class="absolute bottom-10 right-10 w-24 h-24 border border-prism/30 rotate-12 rounded-lg"></div>
+        <div class="absolute top-1/2 left-1/4 w-16 h-16 border border-gold/20 rotate-45 rounded-full"></div>
+      </div>
+
+      <div class="max-w-7xl mx-auto px-4 relative z-10">
+        <!-- Main Footer Content -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+
+          <!-- Brand Section -->
+          <div class="lg:col-span-1">
+            <div class="mb-6">
+              <a href="index.html" class="text-3xl font-exo text-gold hover:text-prism transition-all duration-300 hover:shadow-gold">
+                Klicktape
+              </a>
+              <div class="w-16 h-1 bg-gradient-to-r from-gold to-prism mt-2 rounded-full"></div>
+            </div>
+            <p class="text-lightgold/80 font-space text-sm leading-relaxed mb-4">
+              Privacy-first social media platform empowering users with full data control and secure connections.
+            </p>
+            <div class="flex space-x-4">
+              <!-- LinkedIn -->
+              <a href="https://www.linkedin.com/company/105660898/" target="_blank" rel="noopener noreferrer" class="w-10 h-10 bg-gold/20 hover:bg-gold/40 rounded-full flex items-center justify-center transition-all duration-300 hover:shadow-gold group">
+                <svg class="w-5 h-5 text-gold group-hover:text-black transition-colors" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                </svg>
+              </a>
+              <!-- X (Twitter) -->
+              <a href="https://x.com/klicktape" target="_blank" rel="noopener noreferrer" class="w-10 h-10 bg-gold/20 hover:bg-gold/40 rounded-full flex items-center justify-center transition-all duration-300 hover:shadow-gold group">
+                <svg class="w-5 h-5 text-gold group-hover:text-black transition-colors" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                </svg>
+              </a>
+              <!-- Instagram -->
+              <a href="https://www.instagram.com/klicktape/" target="_blank" rel="noopener noreferrer" class="w-10 h-10 bg-gold/20 hover:bg-gold/40 rounded-full flex items-center justify-center transition-all duration-300 hover:shadow-gold group">
+                <svg class="w-5 h-5 text-gold group-hover:text-black transition-colors" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                </svg>
+              </a>
+              <!-- Facebook -->
+              <a href="https://www.facebook.com/profile.php?id=61568703147404" target="_blank" rel="noopener noreferrer" class="w-10 h-10 bg-gold/20 hover:bg-gold/40 rounded-full flex items-center justify-center transition-all duration-300 hover:shadow-gold group">
+                <svg class="w-5 h-5 text-gold group-hover:text-black transition-colors" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+
+          <!-- Quick Links -->
+          <div>
+            <h3 class="text-lg font-exo text-gold mb-4 relative">
+              Quick Links
+              <div class="w-8 h-0.5 bg-prism absolute -bottom-1 left-0"></div>
+            </h3>
+            <ul class="space-y-3 font-space text-sm">
+              <li><a href="index.html" class="text-lightgold/80 hover:text-gold transition-colors duration-300 hover:translate-x-1 inline-block">Home</a></li>
+              <li><a href="index.html#features" class="text-lightgold/80 hover:text-gold transition-colors duration-300 hover:translate-x-1 inline-block">Features</a></li>
+              <li><a href="index.html#about" class="text-lightgold/80 hover:text-gold transition-colors duration-300 hover:translate-x-1 inline-block">About Us</a></li>
+              <li><a href="index.html#faq" class="text-lightgold/80 hover:text-gold transition-colors duration-300 hover:translate-x-1 inline-block">FAQ</a></li>
+              <li><a href="form/form.html" class="text-lightgold/80 hover:text-gold transition-colors duration-300 hover:translate-x-1 inline-block">Join Waitlist</a></li>
+              <li><a href="#" class="text-lightgold/80 hover:text-gold transition-colors duration-300 hover:translate-x-1 inline-block">Download App</a></li>
+            </ul>
+          </div>
+
+          <!-- Legal -->
+          <div>
+            <h3 class="text-lg font-exo text-gold mb-4 relative">
+              Legal
+              <div class="w-8 h-0.5 bg-prism absolute -bottom-1 left-0"></div>
+            </h3>
+            <ul class="space-y-3 font-space text-sm">
+              <li><a href="privacy-policy.html" class="text-lightgold/80 hover:text-gold transition-colors duration-300 hover:translate-x-1 inline-block">Privacy Policy</a></li>
+              <li><a href="terms-conditions.html" class="text-lightgold/80 hover:text-gold transition-colors duration-300 hover:translate-x-1 inline-block">Terms & Conditions</a></li>
+              <li><a href="child-safety-policy.html" class="text-lightgold/80 hover:text-gold transition-colors duration-300 hover:translate-x-1 inline-block">Child Safety Policy</a></li>
+            </ul>
+          </div>
+
+          <!-- Contact & Support -->
+          <div>
+            <h3 class="text-lg font-exo text-gold mb-4 relative">
+              Contact & Support
+              <div class="w-8 h-0.5 bg-prism absolute -bottom-1 left-0"></div>
+            </h3>
+            <ul class="space-y-3 font-space text-sm">
+              <li>
+                <a href="mailto:director@klicktape.com" class="text-lightgold/80 hover:text-gold transition-colors duration-300 flex items-center group">
+                  <svg class="w-4 h-4 mr-2 group-hover:text-prism transition-colors" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
+                    <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
+                  </svg>
+                  director@klicktape.com
+                </a>
+              </li>
+              <li>
+                <a href="tel:+919678011096" class="text-lightgold/80 hover:text-gold transition-colors duration-300 flex items-center group">
+                  <svg class="w-4 h-4 mr-2 group-hover:text-prism transition-colors" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/>
+                  </svg>
+                  +91 9678011096
+                </a>
+              </li>
+              <li class="text-lightgold/80 flex items-start">
+                <svg class="w-4 h-4 mr-2 mt-0.5 text-prism" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                </svg>
+                <span class="text-sm">Tarunodoy Road<br>Silchar, Assam 788123<br>India</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Bottom Section -->
+        <div class="border-t border-gold/20 pt-8">
+          <div class="text-center">
+            <p class="text-lightgold/60 font-space text-sm">
+              © 2025 Klicktape Pvt Ltd. All rights reserved.
+            </p>
+            <p class="text-lightgold/40 font-space text-xs mt-1">
+              Empowering privacy-first social connections worldwide
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Floating Elements -->
+      <div class="absolute top-20 right-20 w-6 h-6 border border-gold/30 rotate-45 animate-pulse hidden lg:block"></div>
+      <div class="absolute bottom-32 left-32 w-4 h-4 bg-prism/30 rounded-full animate-bounce hidden lg:block"></div>
+    </footer>
+
+    <script>
+        // 3D Prism Lattice
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.getElementById('lattice').appendChild(renderer.domElement);
+
+        const geometry = new THREE.IcosahedronGeometry(10, 1); // Smaller for mobile
+        const material = new THREE.MeshBasicMaterial({ color: 0xFFD700, wireframe: true, transparent: true, opacity: 0.3 });
+        const lattice = new THREE.Mesh(geometry, material);
+        scene.add(lattice);
+
+        camera.position.z = 20;
+
+        let mouseX = 0, mouseY = 0;
+        document.addEventListener('mousemove', (e) => {
+            mouseX = (e.clientX / window.innerWidth - 0.5) * 0.03;
+            mouseY = (e.clientY / window.innerHeight - 0.5) * 0.03;
+        });
+
+        function animate() {
+            requestAnimationFrame(animate);
+            lattice.rotation.x += 0.001 + mouseY;
+            lattice.rotation.y += 0.001 + mouseX;
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        window.addEventListener('resize', () => {
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+        });
+
+        // Custom Cursor
+        const cursor = document.querySelector('.cursor');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = `${e.clientX}px`;
+            cursor.style.top = `${e.clientY}px`;
+        });
+        document.querySelectorAll('a, button, .prism-card').forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+        });
+
+        // Back to top functionality
+        window.onscroll = function() {
+            const backToTopBtn = document.getElementById("backToTopBtn");
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                backToTopBtn.style.display = "block";
+            } else {
+                backToTopBtn.style.display = "none";
+            }
+        };
+
+        function scrollToTop() {
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        }
+
+        // Mobile Menu Toggle
+        document.addEventListener('DOMContentLoaded', () => {
+            const hamburger = document.querySelector('.hamburger');
+            const mobileMenu = document.querySelector('.mobile-menu');
+            const closeMenu = document.querySelector('.close-menu');
+
+            // Open menu
+            hamburger.addEventListener('click', () => {
+                mobileMenu.classList.add('active');
+            });
+
+            // Close menu
+            closeMenu.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+            });
+
+            // Close menu when clicking a link (optional enhancement)
+            mobileMenu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.remove('active');
+                });
+            });
+        });
+
+        // Smooth scrolling for table of contents
+        document.querySelectorAll('.toc-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const sectionNumber = this.textContent.split('.')[0];
+                const targetId = getSectionId(sectionNumber);
+                const targetElement = document.getElementById(targetId);
+
+                if (targetElement) {
+                    targetElement.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        function getSectionId(sectionNumber) {
+            const sectionMap = {
+                '1': 'our-services',
+                '2': 'intellectual-property',
+                '3': 'user-representations',
+                '4': 'user-registration',
+                '5': 'products',
+                '6': 'purchases-payment',
+                '7': 'subscriptions',
+                '8': 'refunds',
+                '9': 'software',
+                '10': 'prohibited-activities',
+                '20': 'governing-law',
+                '21': 'dispute-resolution',
+                '23': 'disclaimer',
+                '24': 'limitations-liability',
+                '30': 'contact-us'
+            };
+            return sectionMap[sectionNumber] || '';
+        }
+
+        // Smooth scrolling for internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
