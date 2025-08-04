@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Child Safety Standards Policy - Klicktape</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              gold: '#FFD700',
+              black: '#000000',
+              crystal: '#1A1A33',
+              prism: '#FF9500',
+              lightgold: '#FFF8E1',
+            },
+            boxShadow: {
+              prism: '0 0 30px rgba(255, 149, 0, 0.8), 0 0 60px rgba(255, 149, 0, 0.4)',
+              gold: '0 0 25px rgba(255, 215, 0, 0.9)',
+            },
+            fontFamily: {
+              exo: ['Exo 2', 'sans-serif'],
+              space: ['Space Mono', 'monospace'],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+        body {
+            margin: 0;
+            background: #000000;
+            color: #FFF8E1;
+            font-family: 'Space Mono', monospace;
+            overflow-x: hidden;
+            cursor: none;
+        }
+        #lattice {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.5; /* Reduced for mobile performance */
+        }
+        .custom-cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #FFD700;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.1s ease;
+            mix-blend-mode: difference;
+        }
+        .custom-cursor.hover {
+            width: 40px;
+            height: 40px;
+            border-color: #FF9500;
+            background: rgba(255, 149, 0, 0.1);
+        }
+        .floating-element {
+            position: absolute;
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+        .glow-text {
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+        .content-section {
+            background: linear-gradient(135deg, rgba(26, 26, 51, 0.8) 0%, rgba(0, 0, 0, 0.9) 100%);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+        }
+        .section-divider {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #FFD700, #FF9500, transparent);
+            margin: 2rem 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Custom Cursor -->
+    <div class="custom-cursor"></div>
+    
+    <!-- 3D Lattice Background -->
+    <div id="lattice"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-md border-b border-gold/30">
+        <div class="max-w-7xl mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <a href="index.html" class="text-2xl font-exo text-gold hover:text-prism transition-all duration-300 glow-text">
+                    Klicktape
+                </a>
+                <a href="index.html" class="text-lightgold/80 hover:text-gold transition-colors duration-300 font-space text-sm">
+                    ← Back to Home
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="pt-24 pb-16 min-h-screen relative">
+        <!-- Background Elements -->
+        <div class="floating-element top-20 left-10 w-16 h-16 border border-gold/30 rotate-45 rounded-lg"></div>
+        <div class="floating-element top-40 right-20 w-12 h-12 border border-prism/30 rotate-12 rounded-full"></div>
+        <div class="floating-element bottom-40 left-1/4 w-8 h-8 bg-gold/20 rounded-full"></div>
+
+        <div class="max-w-4xl mx-auto px-4">
+            <!-- Header -->
+            <div class="text-center mb-12">
+                <h1 class="text-4xl md:text-5xl font-exo text-gold mb-4 glow-text">
+                    Child Safety Standards Policy
+                </h1>
+                <div class="w-32 h-1 bg-gradient-to-r from-gold to-prism mx-auto rounded-full mb-6"></div>
+                <p class="text-lightgold/80 font-space text-lg max-w-2xl mx-auto">
+                    Protecting children and ensuring a safe digital environment for all users
+                </p>
+            </div>
+
+            <!-- Content -->
+            <div class="content-section rounded-2xl p-8 md:p-12 space-y-8">
+                <!-- Introduction -->
+                <section>
+                    <p class="text-lightgold/90 font-space leading-relaxed text-base">
+                        At Klicktape, we are committed to providing a safe and secure environment for all users, with a particular focus on protecting children from harm. As a privacy-first social media platform, we prioritize user safety and comply with Google Play's Child Safety Standards policy. This policy outlines our standards and practices to prevent Child Sexual Abuse and Exploitation (CSAE) and Child Sexual Abuse Material (CSAM) on our platform, ensuring compliance with applicable laws and regulations in India and globally.
+                    </p>
+                </section>
+
+                <div class="section-divider"></div>
+
+                <!-- Zero Tolerance Section -->
+                <section>
+                    <h2 class="text-2xl font-exo text-gold mb-6 glow-text">
+                        Zero Tolerance for Child Sexual Abuse and Exploitation (CSAE)
+                    </h2>
+                    <p class="text-lightgold/90 font-space leading-relaxed mb-4">
+                        Klicktape has a zero-tolerance policy for any content or behavior that involves child sexual abuse or exploitation. This includes, but is not limited to:
+                    </p>
+                    <ul class="space-y-3 text-lightgold/90 font-space ml-6">
+                        <li class="flex items-start">
+                            <span class="text-prism mr-3 mt-1">•</span>
+                            Content or behavior that sexually exploits, abuses, or endangers children, such as grooming, sextortion, trafficking, or any form of sexual exploitation.
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-prism mr-3 mt-1">•</span>
+                            Creation, uploading, or distribution of Child Sexual Abuse Material (CSAM), including imagery or content that depicts, encourages, or promotes the sexual abuse of children.
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-prism mr-3 mt-1">•</span>
+                            Inappropriate interactions targeted at children, such as predatory behavior or sexualization of minors.
+                        </li>
+                    </ul>
+                    <p class="text-lightgold/90 font-space leading-relaxed mt-4">
+                        Any content or account found violating these standards will be immediately removed, and appropriate actions, including reporting to law enforcement and relevant authorities, will be taken.
+                    </p>
+                </section>
+
+                <div class="section-divider"></div>
+
+                <!-- In-App Reporting Section -->
+                <section>
+                    <h2 class="text-2xl font-exo text-gold mb-6 glow-text">
+                        In-App Reporting Mechanism
+                    </h2>
+                    <p class="text-lightgold/90 font-space leading-relaxed mb-4">
+                        Klicktape provides an in-app feedback and reporting mechanism to allow users to flag inappropriate content or behavior, including potential CSAE or CSAM. Here's how it works:
+                    </p>
+                    <ul class="space-y-3 text-lightgold/90 font-space ml-6">
+                        <li class="flex items-start">
+                            <span class="text-prism mr-3 mt-1">•</span>
+                            <strong class="text-gold">Report Feature:</strong> Users can access the "Report" option on every user profile, reel, or anonymous room within the Klicktape app.
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-prism mr-3 mt-1">•</span>
+                            <strong class="text-gold">Reporting Process:</strong> Users are prompted to select a reason for the report (e.g., inappropriate content, CSAE concerns) and provide additional details if necessary.
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-prism mr-3 mt-1">•</span>
+                            <strong class="text-gold">Escalation and Review:</strong> Reports related to CSAE or CSAM are automatically escalated for immediate review by our moderation team. Confirmed violations result in content removal, account suspension, and reporting to authorities.
+                        </li>
+                    </ul>
+                    <p class="text-lightgold/90 font-space leading-relaxed mt-4">
+                        This mechanism ensures users can report concerns directly within the app, fostering a safe community environment.
+                    </p>
+                </section>
+
+                <div class="section-divider"></div>
+
+                <!-- CSAM Section -->
+                <section>
+                    <h2 class="text-2xl font-exo text-gold mb-6 glow-text">
+                        Addressing Child Sexual Abuse Material (CSAM)
+                    </h2>
+                    <p class="text-lightgold/90 font-space leading-relaxed mb-4">
+                        Klicktape takes swift and decisive action upon identifying CSAM, in accordance with our published standards and applicable laws:
+                    </p>
+                    <ul class="space-y-3 text-lightgold/90 font-space ml-6">
+                        <li class="flex items-start">
+                            <span class="text-prism mr-3 mt-1">•</span>
+                            <strong class="text-gold">Content Removal:</strong> Any identified CSAM is immediately removed from the platform.
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-prism mr-3 mt-1">•</span>
+                            <strong class="text-gold">Account Action:</strong> Accounts responsible for uploading or distributing CSAM are suspended or banned.
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-prism mr-3 mt-1">•</span>
+                            <strong class="text-gold">Reporting to Authorities:</strong> Confirmed CSAM is reported to the National Center for Missing and Exploited Children (NCMEC) for incidents involving users in the United States, or to relevant regional authorities in India, such as the Ministry of Women and Child Development or local law enforcement, as required by the Protection of Children from Sexual Offences Act (POCSO), 2012.
+                        </li>
+                    </ul>
+                    <p class="text-lightgold/90 font-space leading-relaxed mt-4">
+                        We employ a combination of automated detection tools and manual review processes to monitor user-generated content and proactively identify potential CSAE or CSAM.
+                    </p>
+                </section>
+
+                <div class="section-divider"></div>
+
+                <!-- Compliance Section -->
+                <section>
+                    <h2 class="text-2xl font-exo text-gold mb-6 glow-text">
+                        Compliance with Child Safety Laws
+                    </h2>
+                    <p class="text-lightgold/90 font-space leading-relaxed mb-4">
+                        Klicktape complies with all relevant child safety laws and regulations, including but not limited to:
+                    </p>
+                    <ul class="space-y-3 text-lightgold/90 font-space ml-6">
+                        <li class="flex items-start">
+                            <span class="text-prism mr-3 mt-1">•</span>
+                            <strong class="text-gold">India:</strong> The Protection of Children from Sexual Offences Act (POCSO), 2012, and the Information Technology (Intermediary Guidelines and Digital Media Ethics Code) Rules, 2021.
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-prism mr-3 mt-1">•</span>
+                            <strong class="text-gold">Global:</strong> Applicable international laws and standards, including reporting obligations to NCMEC or equivalent regional authorities.
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-prism mr-3 mt-1">•</span>
+                            <strong class="text-gold">Google Play Policies:</strong> Klicktape self-certifies compliance with Google Play's Child Safety Standards policy, ensuring our app prohibits CSAE, provides an in-app feedback mechanism, addresses CSAM, and adheres to legal requirements.
+                        </li>
+                    </ul>
+                    <p class="text-lightgold/90 font-space leading-relaxed mt-4">
+                        We maintain a robust process for reporting confirmed CSAM to authorities and regularly review our policies to ensure ongoing compliance with evolving legal standards.
+                    </p>
+                </section>
+
+                <div class="section-divider"></div>
+
+                <!-- Contact Section -->
+                <section>
+                    <h2 class="text-2xl font-exo text-gold mb-6 glow-text">
+                        Child Safety Point of Contact
+                    </h2>
+                    <p class="text-lightgold/90 font-space leading-relaxed mb-4">
+                        For any concerns related to child safety or CSAE, users and authorities can contact our designated Child Safety Officer at:
+                    </p>
+                    <div class="bg-crystal/50 rounded-lg p-6 border border-gold/20">
+                        <ul class="space-y-3 text-lightgold/90 font-space">
+                            <li class="flex items-center">
+                                <span class="text-prism mr-3">📧</span>
+                                <strong class="text-gold mr-2">Email:</strong>
+                                <a href="mailto:director@klicktape.com" class="text-lightgold hover:text-gold transition-colors">director@klicktape.com</a>
+                            </li>
+                            <li class="flex items-center">
+                                <span class="text-prism mr-3">📞</span>
+                                <strong class="text-gold mr-2">Phone:</strong>
+                                <a href="tel:+919678011096" class="text-lightgold hover:text-gold transition-colors">+91 9678011096</a>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-prism mr-3 mt-1">📍</span>
+                                <div>
+                                    <strong class="text-gold">Address:</strong>
+                                    <span class="text-lightgold/90 ml-2">Klicktape Pvt Ltd, Tarunodoy Road, Silchar, Assam 788123, India</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <p class="text-lightgold/90 font-space leading-relaxed mt-4">
+                        Our Child Safety Officer is empowered to discuss Klicktape's CSAM prevention practices, compliance measures, and enforcement procedures, ensuring prompt and effective responses to inquiries.
+                    </p>
+                </section>
+
+                <div class="section-divider"></div>
+
+                <!-- Content Monitoring Section -->
+                <section>
+                    <h2 class="text-2xl font-exo text-gold mb-6 glow-text">
+                        Content Monitoring and Moderation
+                    </h2>
+                    <p class="text-lightgold/90 font-space leading-relaxed mb-4">
+                        Klicktape employs a multi-layered approach to content moderation to prevent CSAE and CSAM:
+                    </p>
+                    <ul class="space-y-3 text-lightgold/90 font-space ml-6">
+                        <li class="flex items-start">
+                            <span class="text-prism mr-3 mt-1">•</span>
+                            <strong class="text-gold">Automated Tools:</strong> We use advanced AI-driven tools, such as content classifiers, to flag potentially harmful content for review.
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-prism mr-3 mt-1">•</span>
+                            <strong class="text-gold">Manual Review:</strong> Our moderation team conducts thorough reviews of flagged content, prioritizing reports related to CSAE or CSAM.
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-prism mr-3 mt-1">•</span>
+                            <strong class="text-gold">Proactive Measures:</strong> We continuously monitor user-generated content, including reels and anonymous rooms, to detect and prevent inappropriate behavior.
+                        </li>
+                    </ul>
+                    <p class="text-lightgold/90 font-space leading-relaxed mt-4">
+                        These efforts ensure that Klicktape remains a safe space for all users, particularly minors.
+                    </p>
+                </section>
+
+                <div class="section-divider"></div>
+
+                <!-- Age-Appropriate Content Section -->
+                <section>
+                    <h2 class="text-2xl font-exo text-gold mb-6 glow-text">
+                        Age-Appropriate Content
+                    </h2>
+                    <p class="text-lightgold/90 font-space leading-relaxed mb-4">
+                        Klicktape is designed to ensure all content is appropriate for users of all ages. We prohibit content that:
+                    </p>
+                    <ul class="space-y-3 text-lightgold/90 font-space ml-6">
+                        <li class="flex items-start">
+                            <span class="text-prism mr-3 mt-1">•</span>
+                            Promotes or depicts excessive violence, blood, or gore.
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-prism mr-3 mt-1">•</span>
+                            Encourages harmful or dangerous activities.
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-prism mr-3 mt-1">•</span>
+                            Promotes negative body image or cosmetic adjustments for entertainment purposes.
+                        </li>
+                    </ul>
+                    <p class="text-lightgold/90 font-space leading-relaxed mt-4">
+                        Our anonymous rooms and gamified engagement features are moderated to ensure they remain safe and inclusive for all users, with special attention to protecting minors.
+                    </p>
+                </section>
+
+                <div class="section-divider"></div>
+
+                <!-- Privacy Section -->
+                <section>
+                    <h2 class="text-2xl font-exo text-gold mb-6 glow-text">
+                        User Privacy and Data Protection
+                    </h2>
+                    <p class="text-lightgold/90 font-space leading-relaxed mb-4">
+                        As a privacy-first platform, Klicktape adheres to stringent data protection practices, especially for minors:
+                    </p>
+                    <ul class="space-y-3 text-lightgold/90 font-space ml-6">
+                        <li class="flex items-start">
+                            <span class="text-prism mr-3 mt-1">•</span>
+                            Minimal data collection, requiring only an email and password for sign-up.
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-prism mr-3 mt-1">•</span>
+                            No tracking or targeted advertising, ensuring user data is not exploited.
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-prism mr-3 mt-1">•</span>
+                            Compliance with India's proposed Digital Personal Data Protection Act and global privacy standards.
+                        </li>
+                    </ul>
+                </section>
+
+                <div class="section-divider"></div>
+
+                <!-- Continuous Improvement Section -->
+                <section>
+                    <h2 class="text-2xl font-exo text-gold mb-6 glow-text">
+                        Commitment to Continuous Improvement
+                    </h2>
+                    <p class="text-lightgold/90 font-space leading-relaxed">
+                        Klicktape is dedicated to maintaining a safe digital environment. We review this Child Safety Standards policy annually or upon significant legal or policy changes to ensure ongoing compliance. We also collaborate with industry coalitions, such as the Tech Coalition, to adopt best practices for combating online CSAE.
+                    </p>
+                </section>
+
+                <div class="section-divider"></div>
+
+                <!-- How Users Can Help Section -->
+                <section>
+                    <h2 class="text-2xl font-exo text-gold mb-6 glow-text">
+                        How Users Can Help
+                    </h2>
+                    <p class="text-lightgold/90 font-space leading-relaxed mb-4">
+                        We encourage our community to actively participate in maintaining a safe platform by:
+                    </p>
+                    <ul class="space-y-3 text-lightgold/90 font-space ml-6">
+                        <li class="flex items-start">
+                            <span class="text-prism mr-3 mt-1">•</span>
+                            Reporting any content or behavior that violates our standards using the in-app reporting feature.
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-prism mr-3 mt-1">•</span>
+                            Contacting our Child Safety Officer for concerns related to child safety.
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-prism mr-3 mt-1">•</span>
+                            Staying informed about our policies and updates via our website.
+                        </li>
+                    </ul>
+                </section>
+
+                <div class="section-divider"></div>
+
+                <!-- Effective Date Section -->
+                <section>
+                    <h2 class="text-2xl font-exo text-gold mb-6 glow-text">
+                        Effective Date
+                    </h2>
+                    <p class="text-lightgold/90 font-space leading-relaxed mb-4">
+                        This policy is effective as of January 22, 2026, and applies to all Klicktape apps published on the Google Play Store. For further details on reporting requirements or compliance, visit the Google Play Console Help Center.
+                    </p>
+                    <p class="text-lightgold/90 font-space leading-relaxed">
+                        Klicktape is committed to creating a secure, respectful, and privacy-first digital space where safety and authentic connections coexist. Join us in building a safer social media future.
+                    </p>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gradient-to-b from-black to-crystal py-16 border-t border-gold/30 relative overflow-hidden">
+        <!-- Background Pattern -->
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-gold/20 via-transparent to-prism/20"></div>
+            <div class="absolute top-10 left-10 w-32 h-32 border border-gold/30 rotate-45 rounded-lg"></div>
+            <div class="absolute bottom-10 right-10 w-24 h-24 border border-prism/30 rotate-12 rounded-lg"></div>
+            <div class="absolute top-1/2 left-1/4 w-16 h-16 border border-gold/20 rotate-45 rounded-full"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 relative z-10">
+            <!-- Main Footer Content -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+
+                <!-- Brand Section -->
+                <div class="lg:col-span-1">
+                    <div class="mb-6">
+                        <a href="index.html" class="text-3xl font-exo text-gold hover:text-prism transition-all duration-300 hover:shadow-gold">
+                            Klicktape
+                        </a>
+                        <div class="w-16 h-1 bg-gradient-to-r from-gold to-prism mt-2 rounded-full"></div>
+                    </div>
+                    <p class="text-lightgold/80 font-space text-sm leading-relaxed mb-4">
+                        Privacy-first social media platform empowering users with full data control and secure connections.
+                    </p>
+                    <div class="flex space-x-4">
+                        <!-- LinkedIn -->
+                        <a href="https://www.linkedin.com/company/105660898/" target="_blank" rel="noopener noreferrer" class="w-10 h-10 bg-gold/20 hover:bg-gold/40 rounded-full flex items-center justify-center transition-all duration-300 hover:shadow-gold group">
+                            <svg class="w-5 h-5 text-gold group-hover:text-black transition-colors" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                            </svg>
+                        </a>
+                        <!-- X (Twitter) -->
+                        <a href="https://x.com/klicktape" target="_blank" rel="noopener noreferrer" class="w-10 h-10 bg-gold/20 hover:bg-gold/40 rounded-full flex items-center justify-center transition-all duration-300 hover:shadow-gold group">
+                            <svg class="w-5 h-5 text-gold group-hover:text-black transition-colors" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                            </svg>
+                        </a>
+                        <!-- Instagram -->
+                        <a href="https://www.instagram.com/klicktape/" target="_blank" rel="noopener noreferrer" class="w-10 h-10 bg-gold/20 hover:bg-gold/40 rounded-full flex items-center justify-center transition-all duration-300 hover:shadow-gold group">
+                            <svg class="w-5 h-5 text-gold group-hover:text-black transition-colors" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                            </svg>
+                        </a>
+                        <!-- Facebook -->
+                        <a href="https://www.facebook.com/profile.php?id=61568703147404" target="_blank" rel="noopener noreferrer" class="w-10 h-10 bg-gold/20 hover:bg-gold/40 rounded-full flex items-center justify-center transition-all duration-300 hover:shadow-gold group">
+                            <svg class="w-5 h-5 text-gold group-hover:text-black transition-colors" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="text-lg font-exo text-gold mb-4 relative">
+                        Quick Links
+                        <div class="w-8 h-0.5 bg-prism absolute -bottom-1 left-0"></div>
+                    </h3>
+                    <ul class="space-y-3 font-space text-sm">
+                        <li><a href="index.html" class="text-lightgold/80 hover:text-gold transition-colors duration-300 hover:translate-x-1 inline-block">Home</a></li>
+                        <li><a href="index.html#features" class="text-lightgold/80 hover:text-gold transition-colors duration-300 hover:translate-x-1 inline-block">Features</a></li>
+                        <li><a href="index.html#about" class="text-lightgold/80 hover:text-gold transition-colors duration-300 hover:translate-x-1 inline-block">About Us</a></li>
+                        <li><a href="index.html#faq" class="text-lightgold/80 hover:text-gold transition-colors duration-300 hover:translate-x-1 inline-block">FAQ</a></li>
+                        <li><a href="form/form.html" class="text-lightgold/80 hover:text-gold transition-colors duration-300 hover:translate-x-1 inline-block">Join Waitlist</a></li>
+                        <li><a href="#" class="text-lightgold/80 hover:text-gold transition-colors duration-300 hover:translate-x-1 inline-block">Download App</a></li>
+                    </ul>
+                </div>
+
+                <!-- Legal -->
+                <div>
+                    <h3 class="text-lg font-exo text-gold mb-4 relative">
+                        Legal
+                        <div class="w-8 h-0.5 bg-prism absolute -bottom-1 left-0"></div>
+                    </h3>
+                    <ul class="space-y-3 font-space text-sm">
+                        <li><a href="privacy-policy.html" class="text-lightgold/80 hover:text-gold transition-colors duration-300 hover:translate-x-1 inline-block">Privacy Policy</a></li>
+                        <li><a href="terms-conditions.html" class="text-lightgold/80 hover:text-gold transition-colors duration-300 hover:translate-x-1 inline-block">Terms & Conditions</a></li>
+                        <li><a href="child-safety-policy.html" class="text-lightgold/80 hover:text-gold transition-colors duration-300 hover:translate-x-1 inline-block">Child Safety Policy</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact & Support -->
+                <div>
+                    <h3 class="text-lg font-exo text-gold mb-4 relative">
+                        Contact & Support
+                        <div class="w-8 h-0.5 bg-prism absolute -bottom-1 left-0"></div>
+                    </h3>
+                    <ul class="space-y-3 font-space text-sm">
+                        <li>
+                            <a href="mailto:director@klicktape.com" class="text-lightgold/80 hover:text-gold transition-colors duration-300 flex items-center group">
+                                <svg class="w-4 h-4 mr-2 group-hover:text-prism transition-colors" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
+                                    <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
+                                </svg>
+                                director@klicktape.com
+                            </a>
+                        </li>
+                        <li>
+                            <a href="tel:+919678011096" class="text-lightgold/80 hover:text-gold transition-colors duration-300 flex items-center group">
+                                <svg class="w-4 h-4 mr-2 group-hover:text-prism transition-colors" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/>
+                                </svg>
+                                +91 9678011096
+                            </a>
+                        </li>
+                        <li class="text-lightgold/80 flex items-start">
+                            <svg class="w-4 h-4 mr-2 mt-0.5 text-prism" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                            </svg>
+                            <span class="text-sm">Tarunodoy Road<br>Silchar, Assam 788123<br>India</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Bottom Section -->
+            <div class="border-t border-gold/20 pt-8">
+                <div class="text-center">
+                    <p class="text-lightgold/60 font-space text-sm">
+                        © 2025 Klicktape Pvt Ltd. All rights reserved.
+                    </p>
+                    <p class="text-lightgold/40 font-space text-xs mt-1">
+                        Empowering privacy-first social connections worldwide
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Floating Elements -->
+        <div class="absolute top-20 right-20 w-6 h-6 border border-gold/30 rotate-45 animate-pulse hidden lg:block"></div>
+        <div class="absolute bottom-32 left-32 w-4 h-4 bg-prism/30 rounded-full animate-bounce hidden lg:block"></div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // 3D Prism Lattice
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: false });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setClearColor(0x000000, 0);
+        document.getElementById('lattice').appendChild(renderer.domElement);
+
+        // Create lattice structure
+        const geometry = new THREE.BoxGeometry(0.1, 0.1, 0.1);
+        const material = new THREE.MeshBasicMaterial({
+            color: 0xFFD700,
+            wireframe: true,
+            transparent: true,
+            opacity: 0.6
+        });
+
+        const lattice = new THREE.Group();
+        const gridSize = 20;
+        const spacing = 2;
+
+        for (let x = -gridSize; x <= gridSize; x += spacing) {
+            for (let y = -gridSize; y <= gridSize; y += spacing) {
+                for (let z = -gridSize; z <= gridSize; z += spacing) {
+                    const cube = new THREE.Mesh(geometry, material);
+                    cube.position.set(x, y, z);
+                    lattice.add(cube);
+                }
+            }
+        }
+
+        scene.add(lattice);
+        camera.position.z = 30;
+
+        // Animation
+        function animate() {
+            requestAnimationFrame(animate);
+            lattice.rotation.x += 0.002;
+            lattice.rotation.y += 0.002;
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // Custom cursor
+        const cursor = document.querySelector('.custom-cursor');
+        let mouseX = 0, mouseY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        function updateCursor() {
+            cursor.style.left = mouseX + 'px';
+            cursor.style.top = mouseY + 'px';
+            requestAnimationFrame(updateCursor);
+        }
+        updateCursor();
+
+        // Cursor hover effects
+        const hoverElements = document.querySelectorAll('a, button, [role="button"]');
+        hoverElements.forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

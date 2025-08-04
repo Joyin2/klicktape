@@ -65,5 +65,8 @@ node_modules/
 # dotenv environment variables file
 .env
 
+# Supabase configuration (contains sensitive keys)
+public/config.js
+
 # dataconnect generated files
 .dataconnect

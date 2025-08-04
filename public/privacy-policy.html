@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - Klicktape</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              gold: '#FFD700',
+              black: '#000000',
+              crystal: '#1A1A33',
+              prism: '#FF9500',
+              lightgold: '#FFF8E1',
+            },
+            boxShadow: {
+              prism: '0 0 30px rgba(255, 149, 0, 0.8), 0 0 60px rgba(255, 149, 0, 0.4)',
+              gold: '0 0 25px rgba(255, 215, 0, 0.9)',
+            },
+            fontFamily: {
+              exo: ['Exo 2', 'sans-serif'],
+              space: ['Space Mono', 'monospace'],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+        body {
+            margin: 0;
+            background: #000000;
+            color: #FFF8E1;
+            font-family: 'Space Mono', monospace;
+            overflow-x: hidden;
+            cursor: none;
+        }
+        #lattice {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.5; /* Reduced for mobile performance */
+        }
+        .cursor {
+            display: none; /* Hidden on mobile by default */
+        }
+        @media (min-width: 768px) {
+            .cursor {
+                display: block;
+                position: fixed;
+                width: 25px;
+                height: 25px;
+                border: 2px solid #FFD700;
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 9999;
+                transition: transform 0.2s ease, border-color 0.3s ease;
+            }
+            .cursor.hover {
+                transform: scale(1.5);
+                border-color: #FF9500;
+            }
+        }
+        .prism-card {
+            background: linear-gradient(135deg, rgba(26, 26, 51, 0.9), rgba(0, 0, 0, 0.7));
+            border: 1px solid #FFD700;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        .prism-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.6);
+        }
+        .section-card {
+            background: linear-gradient(135deg, rgba(26, 26, 51, 0.8), rgba(0, 0, 0, 0.6));
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(255, 149, 0, 0.1), rgba(255, 215, 0, 0.1));
+            border: 1px solid rgba(255, 149, 0, 0.3);
+        }
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #FFD700, #FF9500);
+            color: #000;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            font-size: 18px;
+            display: none;
+            transition: all 0.3s;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+            font-weight: bold;
+        }
+        .back-to-top:hover {
+            transform: translateY(-2px) scale(1.1);
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.8);
+        }
+        /* Mobile Navbar */
+        .mobile-menu {
+            display: none; /* Hidden by default */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 100;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .mobile-menu.active {
+            display: flex;
+        }
+        .hamburger {
+            display: block;
+            font-size: 2rem;
+            color: #FFD700;
+            cursor: pointer;
+            z-index: 101; /* Ensure it's above other elements */
+        }
+        @media (min-width: 768px) {
+            .hamburger {
+                display: none;
+            }
+            .mobile-menu {
+                display: none !important; /* Force hide on desktop */
+            }
+        }
+        .liquid-gold {
+            animation: liquid 4s infinite;
+        }
+        @keyframes liquid {
+            0%, 100% { transform: translateY(0); }
+            25% { transform: translateY(-3px); }
+            50% { transform: translateY(-6px); }
+            75% { transform: translateY(-3px); }
+        }
+        @media (max-width: 768px) {
+            body {
+                cursor: auto;
+            }
+            .cursor {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 3D Prism Lattice Background -->
+    <div id="lattice"></div>
+
+    <!-- Custom Cursor -->
+    <div class="cursor"></div>
+
+    <!-- Navbar -->
+    <nav class="fixed top-0 w-full bg-black/90 backdrop-blur-2xl z-50 shadow-gold">
+      <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+        <a href="index.html" class="text-2xl sm:text-3xl font-exo text-gold liquid-gold">Klicktape</a>
+        <div class="hidden md:flex space-x-8 text-sm font-space uppercase tracking-widest">
+          <a href="index.html#features" class="hover:text-prism transition-colors">Features</a>
+          <a href="index.html#about" class="hover:text-prism transition-colors">About</a>
+          <a href="index.html#how-it-works" class="hover:text-prism transition-colors">How It Works</a>
+          <a href="index.html#testimonials" class="hover:text-prism transition-colors">Testimonials</a>
+          <a href="index.html#faq" class="hover:text-prism transition-colors">FAQ</a>
+        </div>
+        <a href="form/form.html" class="hidden md:block bg-gradient-to-r from-gold to-prism text-black px-4 py-2 rounded-full font-space hover:shadow-prism transition-all">Join Waitlist</a>
+        <div class="hamburger md:hidden">☰</div>
+      </div>
+      <!-- Mobile Menu -->
+      <div class="mobile-menu">
+        <div class="absolute top-4 right-4 text-3xl text-gold cursor-pointer close-menu">×</div>
+        <a href="index.html#features" class="text-2xl font-space text-lightgold py-4 hover:text-prism">Features</a>
+        <a href="index.html#about" class="text-2xl font-space text-lightgold py-4 hover:text-prism">About</a>
+        <a href="index.html#how-it-works" class="text-2xl font-space text-lightgold py-4 hover:text-prism">How It Works</a>
+        <a href="index.html#testimonials" class="text-2xl font-space text-lightgold py-4 hover:text-prism">Testimonials</a>
+        <a href="index.html#faq" class="text-2xl font-space text-lightgold py-4 hover:text-prism">FAQ</a>
+        <a href="form/form.html" class="bg-gradient-to-r from-gold to-prism text-black px-6 py-3 rounded-full font-space text-lg mt-6 hover:shadow-prism transition-all">Join Waitlist</a>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="min-h-screen pt-20 pb-16">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+
+            <!-- Header -->
+            <div class="text-center mb-16">
+                <h1 class="text-5xl md:text-6xl font-exo text-gold mb-4 shadow-gold">
+                    PRIVACY POLICY
+                </h1>
+                <p class="text-lightgold/80 font-space text-lg">Last updated June 25, 2025</p>
+                <div class="w-32 h-1 bg-gradient-to-r from-gold to-prism mx-auto mt-6 rounded-full"></div>
+            </div>
+
+            <!-- Introduction Section -->
+            <div class="section-card rounded-xl p-8 mb-8 border-l-4 border-gold">
+                <h2 class="text-3xl font-exo text-gold mb-6 flex items-center">
+                    <span class="w-8 h-8 bg-gold/20 rounded-full flex items-center justify-center mr-3">
+                        <span class="text-gold text-lg">📋</span>
+                    </span>
+                    INTRODUCTION
+                </h2>
+
+                <div class="highlight-box rounded-lg p-6 mb-6">
+                    <p class="text-lightgold/90 font-space leading-relaxed mb-4">This Privacy Notice for <span class="text-gold font-bold">Klicktape Pvt Ltd</span> ("we," "us," or "our") describes how and why we might access, collect, store, use, and/or share ("process") your personal information when you use our services ("Services"), including when you:</p>
+                    <ul class="text-lightgold/80 font-space space-y-2 ml-6">
+                        <li class="flex items-start"><span class="text-prism mr-2">•</span>Visit our website at <span class="text-gold">https://www.klicktape.com</span> or any website of ours that links to this Privacy Notice</li>
+                        <li class="flex items-start"><span class="text-prism mr-2">•</span>Download and use our mobile application (<span class="text-gold">Klicktape</span>), or any other application of ours that links to this Privacy Notice</li>
+                        <li class="flex items-start"><span class="text-prism mr-2">•</span>Use Social Media Application</li>
+                        <li class="flex items-start"><span class="text-prism mr-2">•</span>Engage with us in other related ways, including any sales, marketing, or events</li>
+                    </ul>
+                </div>
+
+                <div class="prism-card rounded-lg p-6 mb-6">
+                    <h3 class="text-xl font-exo text-prism mb-4 flex items-center">
+                        <span class="text-2xl mr-2">🔒</span>
+                        About Klicktape
+                    </h3>
+                    <p class="text-lightgold/90 font-space leading-relaxed mb-4">Klicktape is a next-generation, privacy-focused social media platform that allows users to share stories, photos, reels, and connect with others, while keeping their personal data safe. Unlike traditional social media apps, Klicktape does not use personalized ads or share your data with third-party advertisers.</p>
+
+                    <p class="text-lightgold/90 font-space leading-relaxed mb-4">Instead, Klicktape uses <span class="text-gold font-bold">contextual advertising</span>, which displays ads based solely on the content being viewed, not on your browsing history, personal data, or behavior. This means you get relevant ads without sacrificing your privacy.</p>
+
+                    <h4 class="text-lg font-exo text-gold mb-3">Key features include:</h4>
+                    <ul class="text-lightgold/80 font-space space-y-2 ml-6">
+                        <li class="flex items-start"><span class="text-prism mr-2">✨</span>Anonymous Rooms for open, safe discussion</li>
+                        <li class="flex items-start"><span class="text-prism mr-2">✨</span>Ad-free premium subscription for enhanced experience</li>
+                        <li class="flex items-start"><span class="text-prism mr-2">✨</span>Shoppable content overlays</li>
+                        <li class="flex items-start"><span class="text-prism mr-2">✨</span>Gamified engagement features to increase interaction</li>
+                        <li class="flex items-start"><span class="text-prism mr-2">✨</span>DMs, Stories, Reels, and Photo sharing, all designed with privacy-first principles</li>
+                    </ul>
+                    <p class="text-lightgold/90 font-space leading-relaxed mt-4">Klicktape offers a secure, transparent, and ethical alternative to conventional social networks. We believe in giving users full control over their data and digital experience.</p>
+                </div>
+
+                <div class="bg-gradient-to-r from-prism/20 to-gold/20 rounded-lg p-6 border border-prism/30">
+                    <p class="text-lightgold/90 font-space leading-relaxed"><span class="text-gold font-bold">Questions or concerns?</span> Reading this Privacy Notice will help you understand your privacy rights and choices. We are responsible for making decisions about how your personal information is processed. If you do not agree with our policies and practices, please do not use our Services. If you still have any questions or concerns, please contact us at <span class="text-gold font-bold">director@klicktape.com</span>.</p>
+                </div>
+            </div>
+
+            <!-- Summary Section -->
+            <div class="highlight-box rounded-lg p-8 mb-8 border border-prism/30">
+                <h3 class="text-2xl font-exo text-prism mb-6 flex items-center">
+                    <span class="w-8 h-8 bg-prism/20 rounded-full flex items-center justify-center mr-3">
+                        <span class="text-prism text-lg">📝</span>
+                    </span>
+                    SUMMARY OF KEY POINTS
+                </h3>
+                <p class="text-lightgold/90 font-space leading-relaxed mb-6">This summary provides key points from our Privacy Notice, but you can find out more details about any of these topics by using our table of contents below to find the section you are looking for.</p>
+                <div class="grid gap-4">
+                    <div class="bg-black/30 rounded-lg p-4 border-l-4 border-gold">
+                        <p class="text-lightgold/90 font-space"><span class="text-gold font-bold">What personal information do we process?</span> When you visit, use, or navigate our Services, we may process personal information depending on how you interact with us and the Services, the choices you make, and the products and features you use.</p>
+                    </div>
+                    <div class="bg-black/30 rounded-lg p-4 border-l-4 border-prism">
+                        <p class="text-lightgold/90 font-space"><span class="text-prism font-bold">Do we process any sensitive personal information?</span> Some of the information may be considered "special" or "sensitive" in certain jurisdictions, for example your racial or ethnic origins, sexual orientation, and religious beliefs. We may process sensitive personal information when necessary with your consent or as otherwise permitted by applicable law.</p>
+                    </div>
+                    <div class="bg-black/30 rounded-lg p-4 border-l-4 border-gold">
+                        <p class="text-lightgold/90 font-space"><span class="text-gold font-bold">Do we collect any information from third parties?</span> We do not collect any information from third parties.</p>
+                    </div>
+                    <div class="bg-black/30 rounded-lg p-4 border-l-4 border-prism">
+                        <p class="text-lightgold/90 font-space"><span class="text-prism font-bold">How do we process your information?</span> We process your information to provide, improve, and administer our Services, communicate with you, for security and fraud prevention, and to comply with law. We may also process your information for other purposes with your consent.</p>
+                    </div>
+                    <div class="bg-black/30 rounded-lg p-4 border-l-4 border-gold">
+                        <p class="text-lightgold/90 font-space"><span class="text-gold font-bold">How do we keep your information safe?</span> We have adequate organizational and technical processes and procedures in place to protect your personal information. However, no electronic transmission over the internet or information storage technology can be guaranteed to be 100% secure.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Table of Contents -->
+            <div class="section-card rounded-xl p-8 mb-8 border-l-4 border-prism">
+                <h2 class="text-3xl font-exo text-prism mb-6 flex items-center">
+                    <span class="w-8 h-8 bg-prism/20 rounded-full flex items-center justify-center mr-3">
+                        <span class="text-prism text-lg">📚</span>
+                    </span>
+                    TABLE OF CONTENTS
+                </h2>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="space-y-3">
+                        <div class="bg-black/30 rounded-lg p-3 border border-gold/20 hover:border-gold/50 transition-colors">
+                            <span class="text-gold font-space">1. WHAT INFORMATION DO WE COLLECT?</span>
+                        </div>
+                        <div class="bg-black/30 rounded-lg p-3 border border-gold/20 hover:border-gold/50 transition-colors">
+                            <span class="text-gold font-space">2. HOW DO WE PROCESS YOUR INFORMATION?</span>
+                        </div>
+                        <div class="bg-black/30 rounded-lg p-3 border border-gold/20 hover:border-gold/50 transition-colors">
+                            <span class="text-gold font-space">3. WHEN AND WITH WHOM DO WE SHARE YOUR PERSONAL INFORMATION?</span>
+                        </div>
+                        <div class="bg-black/30 rounded-lg p-3 border border-gold/20 hover:border-gold/50 transition-colors">
+                            <span class="text-gold font-space">4. DO WE USE COOKIES AND OTHER TRACKING TECHNOLOGIES?</span>
+                        </div>
+                        <div class="bg-black/30 rounded-lg p-3 border border-gold/20 hover:border-gold/50 transition-colors">
+                            <span class="text-gold font-space">5. DO WE OFFER ARTIFICIAL INTELLIGENCE-BASED PRODUCTS?</span>
+                        </div>
+                        <div class="bg-black/30 rounded-lg p-3 border border-gold/20 hover:border-gold/50 transition-colors">
+                            <span class="text-gold font-space">6. HOW DO WE HANDLE YOUR SOCIAL LOGINS?</span>
+                        </div>
+                        <div class="bg-black/30 rounded-lg p-3 border border-gold/20 hover:border-gold/50 transition-colors">
+                            <span class="text-gold font-space">7. HOW LONG DO WE KEEP YOUR INFORMATION?</span>
+                        </div>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="bg-black/30 rounded-lg p-3 border border-prism/20 hover:border-prism/50 transition-colors">
+                            <span class="text-prism font-space">8. HOW DO WE KEEP YOUR INFORMATION SAFE?</span>
+                        </div>
+                        <div class="bg-black/30 rounded-lg p-3 border border-prism/20 hover:border-prism/50 transition-colors">
+                            <span class="text-prism font-space">9. WHAT ARE YOUR PRIVACY RIGHTS?</span>
+                        </div>
+                        <div class="bg-black/30 rounded-lg p-3 border border-prism/20 hover:border-prism/50 transition-colors">
+                            <span class="text-prism font-space">10. CONTROLS FOR DO-NOT-TRACK FEATURES</span>
+                        </div>
+                        <div class="bg-black/30 rounded-lg p-3 border border-prism/20 hover:border-prism/50 transition-colors">
+                            <span class="text-prism font-space">11. DO OTHER REGIONS HAVE SPECIFIC PRIVACY RIGHTS?</span>
+                        </div>
+                        <div class="bg-black/30 rounded-lg p-3 border border-prism/20 hover:border-prism/50 transition-colors">
+                            <span class="text-prism font-space">12. DO WE MAKE UPDATES TO THIS NOTICE?</span>
+                        </div>
+                        <div class="bg-black/30 rounded-lg p-3 border border-prism/20 hover:border-prism/50 transition-colors">
+                            <span class="text-prism font-space">13. HOW CAN YOU CONTACT US ABOUT THIS NOTICE?</span>
+                        </div>
+                        <div class="bg-black/30 rounded-lg p-3 border border-prism/20 hover:border-prism/50 transition-colors">
+                            <span class="text-prism font-space">14. HOW CAN YOU REVIEW, UPDATE, OR DELETE THE DATA WE COLLECT FROM YOU?</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        <div class="section" id="information-collection">
+            <h2>1. WHAT INFORMATION DO WE COLLECT?</h2>
+
+            <h3>Personal Information You Disclose to Us</h3>
+            <p><strong>In Short:</strong> We collect personal information that you provide to us.</p>
+
+            <p>We collect personal information that you voluntarily provide to us when you register on the Services, express an interest in obtaining information about us or our products and Services, when you participate in activities on the Services, or otherwise when you contact us.</p>
+
+            <p><strong>Personal Information Provided by You.</strong> The personal information that we collect depends on the context of your interactions with us and the Services, the choices you make, and the products and features you use. The personal information we collect may include the following:</p>
+            <ul>
+                <li>names</li>
+                <li>email addresses</li>
+                <li>mailing addresses</li>
+                <li>phone numbers</li>
+                <li>usernames</li>
+                <li>passwords</li>
+                <li>contact preferences</li>
+                <li>contact or authentication data</li>
+            </ul>
+
+            <div class="important-notice">
+                <p><strong>Sensitive Information:</strong> We may process sensitive personal information when necessary with your consent or as otherwise permitted by applicable law.</p>
+            </div>
+        </div>
+
+        <div class="section" id="information-processing">
+            <h2>2. HOW DO WE PROCESS YOUR INFORMATION?</h2>
+
+            <p><strong>In Short:</strong> We process your information to provide, improve, and administer our Services, communicate with you, for security and fraud prevention, and to comply with law. We may also process your information for other purposes with your consent.</p>
+
+            <p>We process your personal information for a variety of reasons, depending on how you interact with our Services, including:</p>
+            <ul>
+                <li><strong>To facilitate account creation and authentication</strong> and otherwise manage user accounts</li>
+                <li><strong>To deliver and facilitate delivery of services</strong> to the user</li>
+                <li><strong>To respond to user inquiries/offer support</strong> to users</li>
+                <li><strong>To send administrative information</strong> to you</li>
+                <li><strong>To fulfill and manage your orders</strong></li>
+                <li><strong>To enable user-to-user communications</strong></li>
+                <li><strong>To request feedback</strong></li>
+                <li><strong>To send you marketing and promotional communications</strong></li>
+                <li><strong>To deliver targeted advertising</strong> to you</li>
+                <li><strong>To protect our Services</strong></li>
+                <li><strong>To identify usage trends</strong></li>
+                <li><strong>To determine the effectiveness of our marketing campaigns</strong></li>
+                <li><strong>To save or protect an individual's vital interest</strong></li>
+            </ul>
+        </div>
+
+        <div class="section" id="information-sharing">
+            <h2>3. WHEN AND WITH WHOM DO WE SHARE YOUR PERSONAL INFORMATION?</h2>
+
+            <p><strong>In Short:</strong> We may share information in specific situations described in this section and/or with the following categories of third parties.</p>
+
+            <p><strong>Vendors, Consultants, and Other Third-Party Service Providers.</strong> We may share your data with third-party vendors, service providers, contractors, or agents ("third parties") who perform services for us or on our behalf and require access to such information to do that work.</p>
+
+            <p>We have contracts in place with our third parties, which are designed to help safeguard your personal information. This means that they cannot do anything with your personal information unless we have instructed them to do it. They will also not share your personal information with any organization apart from us. They also commit to protect the data they hold on our behalf and to retain it for the period we instruct.</p>
+
+            <div class="important-notice">
+                <p><strong>Privacy-First Commitment:</strong> Unlike traditional social media platforms, we do NOT share your personal data with third-party advertisers for personalized advertising. We use contextual advertising only.</p>
+            </div>
+        </div>
+
+        <div class="section" id="data-security">
+            <h2>8. HOW DO WE KEEP YOUR INFORMATION SAFE?</h2>
+
+            <p><strong>In Short:</strong> We aim to protect your personal information through a system of organizational and technical security measures.</p>
+
+            <p>We have implemented appropriate and reasonable technical and organizational security measures designed to protect the security of any personal information we process. However, despite our safeguards and efforts to secure your information, no electronic transmission over the Internet or information storage technology can be guaranteed to be 100% secure, so we cannot promise or guarantee that hackers, cybercriminals, or other unauthorized third parties will not be able to defeat our security and improperly collect, access, steal, or modify your information.</p>
+
+            <p>Although we will do our best to protect your personal information, transmission of personal information to and from our Services is at your own risk. You should only access the Services within a secure environment.</p>
+        </div>
+
+        <div class="section" id="privacy-rights">
+            <h2>9. WHAT ARE YOUR PRIVACY RIGHTS?</h2>
+
+            <p><strong>In Short:</strong> Depending on your state of residence in the US or in some regions, such as the European Economic Area (EEA), United Kingdom (UK), Switzerland, and Canada, you have rights that allow you greater access to and control over your personal information.</p>
+
+            <p>In some regions (like the EEA, UK, Switzerland, and Canada), you have certain rights under applicable data protection laws. These may include the right:</p>
+            <ul>
+                <li>to request access and obtain a copy of your personal information</li>
+                <li>to request rectification or erasure</li>
+                <li>to restrict the processing of your personal information</li>
+                <li>to data portability</li>
+                <li>and if applicable, to object to processing</li>
+            </ul>
+
+            <p>In certain circumstances, you may also have the right to object to the processing of your personal information. You can make such a request by contacting us by using the contact details provided in the section "HOW CAN YOU CONTACT US ABOUT THIS NOTICE?" below.</p>
+        </div>
+
+        <div class="contact-info">
+            <h2>13. HOW CAN YOU CONTACT US ABOUT THIS NOTICE?</h2>
+            <p>If you have questions or comments about this notice, you may contact us by:</p>
+            <ul>
+                <li><strong>Email:</strong> director@klicktape.com</li>
+                <li><strong>Phone:</strong> +91 9678011096</li>
+                <li><strong>Mail:</strong> Klicktape Pvt Ltd<br>
+                    Tarunodoy Road<br>
+                    Silchar, Assam 788123<br>
+                    India</li>
+            </ul>
+        </div>
+
+        <div class="section" id="data-review">
+            <h2>14. HOW CAN YOU REVIEW, UPDATE, OR DELETE THE DATA WE COLLECT FROM YOU?</h2>
+
+            <p>Based on the applicable laws of your country or state of residence in the US, you may have the right to request access to the personal information we collect from you, details about how we have processed it, correct inaccuracies, or delete your personal information. You may also have the right to withdraw your consent to our processing of your personal information.</p>
+
+            <p>If you wish to review, update, or delete your personal information, please fill out and submit a data subject access request or contact us directly at <strong>director@klicktape.com</strong>.</p>
+        </div>
+
+        </div>
+
+        <button class="back-to-top" onclick="scrollToTop()" id="backToTopBtn">↑</button>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gradient-to-b from-black to-crystal py-16 border-t border-gold/30 relative overflow-hidden">
+      <!-- Background Pattern -->
+      <div class="absolute inset-0 opacity-10">
+        <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-gold/20 via-transparent to-prism/20"></div>
+        <div class="absolute top-10 left-10 w-32 h-32 border border-gold/30 rotate-45 rounded-lg"></div>
+        <div class="absolute bottom-10 right-10 w-24 h-24 border border-prism/30 rotate-12 rounded-lg"></div>
+        <div class="absolute top-1/2 left-1/4 w-16 h-16 border border-gold/20 rotate-45 rounded-full"></div>
+      </div>
+
+      <div class="max-w-7xl mx-auto px-4 relative z-10">
+        <!-- Main Footer Content -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+
+          <!-- Brand Section -->
+          <div class="lg:col-span-1">
+            <div class="mb-6">
+              <a href="index.html" class="text-3xl font-exo text-gold hover:text-prism transition-all duration-300 hover:shadow-gold">
+                Klicktape
+              </a>
+              <div class="w-16 h-1 bg-gradient-to-r from-gold to-prism mt-2 rounded-full"></div>
+            </div>
+            <p class="text-lightgold/80 font-space text-sm leading-relaxed mb-4">
+              Privacy-first social media platform empowering users with full data control and secure connections.
+            </p>
+            <div class="flex space-x-4">
+              <!-- LinkedIn -->
+              <a href="https://www.linkedin.com/company/105660898/" target="_blank" rel="noopener noreferrer" class="w-10 h-10 bg-gold/20 hover:bg-gold/40 rounded-full flex items-center justify-center transition-all duration-300 hover:shadow-gold group">
+                <svg class="w-5 h-5 text-gold group-hover:text-black transition-colors" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                </svg>
+              </a>
+              <!-- X (Twitter) -->
+              <a href="https://x.com/klicktape" target="_blank" rel="noopener noreferrer" class="w-10 h-10 bg-gold/20 hover:bg-gold/40 rounded-full flex items-center justify-center transition-all duration-300 hover:shadow-gold group">
+                <svg class="w-5 h-5 text-gold group-hover:text-black transition-colors" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                </svg>
+              </a>
+              <!-- Instagram -->
+              <a href="https://www.instagram.com/klicktape/" target="_blank" rel="noopener noreferrer" class="w-10 h-10 bg-gold/20 hover:bg-gold/40 rounded-full flex items-center justify-center transition-all duration-300 hover:shadow-gold group">
+                <svg class="w-5 h-5 text-gold group-hover:text-black transition-colors" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                </svg>
+              </a>
+              <!-- Facebook -->
+              <a href="https://www.facebook.com/profile.php?id=61568703147404" target="_blank" rel="noopener noreferrer" class="w-10 h-10 bg-gold/20 hover:bg-gold/40 rounded-full flex items-center justify-center transition-all duration-300 hover:shadow-gold group">
+                <svg class="w-5 h-5 text-gold group-hover:text-black transition-colors" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+
+          <!-- Quick Links -->
+          <div>
+            <h3 class="text-lg font-exo text-gold mb-4 relative">
+              Quick Links
+              <div class="w-8 h-0.5 bg-prism absolute -bottom-1 left-0"></div>
+            </h3>
+            <ul class="space-y-3 font-space text-sm">
+              <li><a href="index.html" class="text-lightgold/80 hover:text-gold transition-colors duration-300 hover:translate-x-1 inline-block">Home</a></li>
+              <li><a href="index.html#features" class="text-lightgold/80 hover:text-gold transition-colors duration-300 hover:translate-x-1 inline-block">Features</a></li>
+              <li><a href="index.html#about" class="text-lightgold/80 hover:text-gold transition-colors duration-300 hover:translate-x-1 inline-block">About Us</a></li>
+              <li><a href="index.html#faq" class="text-lightgold/80 hover:text-gold transition-colors duration-300 hover:translate-x-1 inline-block">FAQ</a></li>
+              <li><a href="form/form.html" class="text-lightgold/80 hover:text-gold transition-colors duration-300 hover:translate-x-1 inline-block">Join Waitlist</a></li>
+              <li><a href="#" class="text-lightgold/80 hover:text-gold transition-colors duration-300 hover:translate-x-1 inline-block">Download App</a></li>
+            </ul>
+          </div>
+
+          <!-- Legal -->
+          <div>
+            <h3 class="text-lg font-exo text-gold mb-4 relative">
+              Legal
+              <div class="w-8 h-0.5 bg-prism absolute -bottom-1 left-0"></div>
+            </h3>
+            <ul class="space-y-3 font-space text-sm">
+              <li><a href="privacy-policy.html" class="text-lightgold/80 hover:text-gold transition-colors duration-300 hover:translate-x-1 inline-block">Privacy Policy</a></li>
+              <li><a href="terms-conditions.html" class="text-lightgold/80 hover:text-gold transition-colors duration-300 hover:translate-x-1 inline-block">Terms & Conditions</a></li>
+              <li><a href="child-safety-policy.html" class="text-lightgold/80 hover:text-gold transition-colors duration-300 hover:translate-x-1 inline-block">Child Safety Policy</a></li>
+            </ul>
+          </div>
+
+          <!-- Contact & Support -->
+          <div>
+            <h3 class="text-lg font-exo text-gold mb-4 relative">
+              Contact & Support
+              <div class="w-8 h-0.5 bg-prism absolute -bottom-1 left-0"></div>
+            </h3>
+            <ul class="space-y-3 font-space text-sm">
+              <li>
+                <a href="mailto:director@klicktape.com" class="text-lightgold/80 hover:text-gold transition-colors duration-300 flex items-center group">
+                  <svg class="w-4 h-4 mr-2 group-hover:text-prism transition-colors" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
+                    <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
+                  </svg>
+                  director@klicktape.com
+                </a>
+              </li>
+              <li>
+                <a href="tel:+919678011096" class="text-lightgold/80 hover:text-gold transition-colors duration-300 flex items-center group">
+                  <svg class="w-4 h-4 mr-2 group-hover:text-prism transition-colors" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/>
+                  </svg>
+                  +91 9678011096
+                </a>
+              </li>
+              <li class="text-lightgold/80 flex items-start">
+                <svg class="w-4 h-4 mr-2 mt-0.5 text-prism" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                </svg>
+                <span class="text-sm">Tarunodoy Road<br>Silchar, Assam 788123<br>India</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Bottom Section -->
+        <div class="border-t border-gold/20 pt-8">
+          <div class="text-center">
+            <p class="text-lightgold/60 font-space text-sm">
+              © 2025 Klicktape Pvt Ltd. All rights reserved.
+            </p>
+            <p class="text-lightgold/40 font-space text-xs mt-1">
+              Empowering privacy-first social connections worldwide
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Floating Elements -->
+      <div class="absolute top-20 right-20 w-6 h-6 border border-gold/30 rotate-45 animate-pulse hidden lg:block"></div>
+      <div class="absolute bottom-32 left-32 w-4 h-4 bg-prism/30 rounded-full animate-bounce hidden lg:block"></div>
+    </footer>
+
+    <script>
+        // 3D Prism Lattice
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.getElementById('lattice').appendChild(renderer.domElement);
+
+        const geometry = new THREE.IcosahedronGeometry(10, 1); // Smaller for mobile
+        const material = new THREE.MeshBasicMaterial({ color: 0xFFD700, wireframe: true, transparent: true, opacity: 0.3 });
+        const lattice = new THREE.Mesh(geometry, material);
+        scene.add(lattice);
+
+        camera.position.z = 20;
+
+        let mouseX = 0, mouseY = 0;
+        document.addEventListener('mousemove', (e) => {
+            mouseX = (e.clientX / window.innerWidth - 0.5) * 0.03;
+            mouseY = (e.clientY / window.innerHeight - 0.5) * 0.03;
+        });
+
+        function animate() {
+            requestAnimationFrame(animate);
+            lattice.rotation.x += 0.001 + mouseY;
+            lattice.rotation.y += 0.001 + mouseX;
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        window.addEventListener('resize', () => {
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+        });
+
+        // Custom Cursor
+        const cursor = document.querySelector('.cursor');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = `${e.clientX}px`;
+            cursor.style.top = `${e.clientY}px`;
+        });
+        document.querySelectorAll('a, button, .prism-card').forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+        });
+
+        // Back to top functionality
+        window.onscroll = function() {
+            const backToTopBtn = document.getElementById("backToTopBtn");
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                backToTopBtn.style.display = "block";
+            } else {
+                backToTopBtn.style.display = "none";
+            }
+        };
+
+        function scrollToTop() {
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        }
+
+        // Mobile Menu Toggle
+        document.addEventListener('DOMContentLoaded', () => {
+            const hamburger = document.querySelector('.hamburger');
+            const mobileMenu = document.querySelector('.mobile-menu');
+            const closeMenu = document.querySelector('.close-menu');
+
+            // Open menu
+            hamburger.addEventListener('click', () => {
+                mobileMenu.classList.add('active');
+            });
+
+            // Close menu
+            closeMenu.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+            });
+
+            // Close menu when clicking a link (optional enhancement)
+            mobileMenu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.remove('active');
+                });
+            });
+        });
+
+        // Smooth scrolling for internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
